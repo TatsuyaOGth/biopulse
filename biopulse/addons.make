@@ -1,0 +1,12 @@
+ofxOsc
+ofxAnimationPrimitives
+ofxBox2d
+ofxDelaunay
+ofxExtras
+ofxIniSettings
+ofxMSATimer
+ofxRange
+ofxTextInputField
+ofxTimecode
+ofxTimeline
+ofxTween
