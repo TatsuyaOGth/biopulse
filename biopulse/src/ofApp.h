@@ -19,6 +19,8 @@ public:
     void mouseReleased(int x, int y, int button);
     void windowResized(int w, int h);
     
+    int changeScene(int mv);
+    
     typedef shared_ptr<BaseSceneInterfase> scenePtr;
     vector<scenePtr> mScenes;
     int mNumCurrentScene;

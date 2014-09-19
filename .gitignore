@@ -10,7 +10,7 @@
 *.exe
 *.exp
 
-*.png
+#.png
 *.jpg
 *.csv
 *.txt
@@ -19,6 +19,9 @@
 *.mov
 *.m4v
 *.avi
+
+!*/GUI/*
+
 
 build/
 temp/

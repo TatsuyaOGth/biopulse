@@ -1,14 +1,12 @@
 #pragma once
 
 #include "ofMain.h"
-
+#include "ofxTimeline.h"
 
 //==============================================================
 // utils
 //==============================================================
 // マウスポインタ座標を画面サイズで0-1正規化した値を返す
-//#define debugMouseX ((float)ofGetMouseX()/(float)ofGetWidth())
-//#define debugMouseY ((float)ofGetMouseY()/(float)ofGetHeight())
 #define debugMouseX(a) (((float)ofGetMouseX()/(float)ofGetWidth())*a)
 #define debugMouseY(a) (((float)ofGetMouseY()/(float)ofGetHeight())*a)
 
@@ -28,20 +26,25 @@ static clock_t start = 0;
 
 
 // ofLogger utils
+#define printLOG( msg ) printf("%s,%d:%s\n",__FILE__,__LINE__,msg)
 #define LOG_INFO ofToString(ofGetElapsedTimeMillis(),8)
 #define LOG_NOTICE ofLogNotice(LOG_INFO)
 #define LOG_ERROR ofLogError(LOG_INFO)
 #define LOG_WARNING ofLogWarning(LOG_INFO)
 
+// debug
+#define ASSERT(a) (assert(a))
+
 #define MY_CHECK(e) assert(e)
 
-inline string getHome(){
+inline string getHome()
+{
     char *home = getenv("HOME");
     return string(home);
 }
 
 //==============================================================
-// common parameters
+// constants
 //==============================================================
 namespace plant
 {
@@ -88,20 +91,13 @@ namespace common
 {
     
     // biopulse data
-    static const string biodata_ycam_3 = "ycam-3-20130501.csv";
-    
+    static const int numDatasetPath = 2;
+    static const char* ht[] = {
+        "ycam-3-20130501.csv",
+        "symbiotica-26-20140916.csv"
+    };
     
 }
-
-namespace share
-{
-    static float elapsedTime = 0;
-}
-
-//==============================================================
-// value types
-//==============================================================
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,109 +113,116 @@ namespace share
 class DataController
 {
 public:
-    DataController(const string & path);
-    virtual ~DataController();
-    
-    void setup(int _bufferLength = 256);
-    
-    void allocate(int num);
-    void pushData(float _d);
-    
-    void draw();
-    void draw(float posx, float posy);
-    void draw(float posx, float posy, float w, float h, float min, float max);
-    
-    void setSize(float _width, float _height);
-    void setRange(float _min, float _max);
-    
-    float min, max, width, height;
+    float width, height, speed, gain;
     const string mDataPath;
-    
-private:
     int bufferLength;
-    deque<float> data;
+    bool bPlay;
+    int offset;
+    typedef struct _Data {
+        string timestamp;
+        float voltage;
+    } Data;
+    vector<Data> data;
     
+    
+    DataController(const string & path, bool header = true): mDataPath(path)
+    {
+        ofFile file(path);
+        ASSERT(file.exists());
+        ofBuffer buffer(file);
+        unsigned long tmpCount = 0;
+        while (!buffer.isLastLine()) {
+            string line = buffer.getNextLine();
+            if (header) {
+                header = false;
+                continue;
+            }
+            string replaceTarget = "\"";
+            string::size_type pos = line.find(replaceTarget);
+            while (pos != string::npos) {
+                line.replace(pos, replaceTarget.size(), "");
+                pos = line.find(replaceTarget, pos);
+            }
+            vector<string> col = ofSplitString(line, ",");
+            if (col.size() < 2) {
+                LOG_WARNING << "column is low";
+                continue;
+            }
+            Data d = {col[0], ofToFloat(col[1]) };
+            data.push_back(d);
+        }
+        if (data.empty()) {
+            LOG_WARNING << "dataset is empty: " << path;
+        } else {
+            LOG_NOTICE << "load dataset: " << path;
+        }
+        bufferLength = 0;
+        width = 200.0;
+        height = 50.0;
+        speed = 1;
+        bPlay = false;
+        offset = 0;
+        gain = 1.0;
+    }
+    
+    void update()
+    {
+        if (bPlay) {
+            offset += speed;
+            if (offset < 0) offset = data.size() - 1;
+            if (offset > data.size() - 1) offset = 0;
+        }
+    }
+
+    void draw(){ draw(20.0, 20.0); }
+    void draw(float posx, float posy) { draw(posx, posy, width, height, gain); }
+    void draw(float posx, float posy, float w, float h) { draw(posx, posy, w, h, gain); }
+    void draw(float posx, float posy, float w, float h, float gain)
+    {
+        int datasize = data.size() - 1;
+        int start = offset;
+        int end = offset + bufferLength;
+//        if (ofGetStyle().bFill) {
+//            glBegin(GL_POLYGON);
+//            glVertex2d(posx + w, posy + (h * 0.5));
+//            glVertex2d(posx, posy + (h * 0.5));
+//            
+//        } else {
+//            glBegin(GL_LINE_STRIP);
+//        }
+        
+        ofBeginShape();
+        if (ofGetStyle().bFill) ofVertex(posx, posy + (h * 0.5));
+        for(int i = start; i < end; i++) {
+            int index = i < 0 ? datasize - i : i;
+            index = index > datasize ? index - datasize : index;
+//            glVertex2d(posx + ofMap(i, start, end, 0, w, true), (posy + (h * 0.5)) + (data[index].voltage * gain));
+            ofVertex(posx + ofMap(i, start, end, 0, w, true), (posy + (h * 0.5)) + (data[index].voltage * gain));;
+        }
+        if (ofGetStyle().bFill) ofVertex(posx + w, posy + (h * 0.5));
+        ofEndShape();
+//        glEnd();
+    }
+    
+    void setSize(float _width, float _height)
+    {
+        width = _width;
+        height = _height;
+    }
+    void setSpeed(int sp){ speed = sp; }
+    void setBufferLemgth(int b){ bufferLength = b; }
+    void play(){ bPlay = true; }
+    void stop(){ bPlay = false; }
+    void togglePlay(){ bPlay = !bPlay; }
+    bool isPlay(){ return bPlay; }
+    void setOffset(int v){ offset = v; }
+    void setGain(float v){ gain = v; }
+    float getPosition() { return offset == 0 ? offset : (float)offset / data.size(); }
     
 };
 
-DataController::DataController(const string & path):
-mDataPath(path)
-{
-    
-    bufferLength = 0;
-    min = -1.0;
-    max = 1.0;
-    width = 200.0;
-    height = 50.0;
-}
-
-DataController::~DataController()
-{
-}
-
-void DataController::setup(int _bufferLength)
-{
-    bufferLength = _bufferLength;
-    
-    this->allocate(bufferLength);
-    
-}
-
-void DataController::allocate(int num)
-{
-    data.resize(num);
-}
-
-void DataController::pushData(float _d)
-{
-    for (int i=bufferLength-1; i> 0; i--) {
-        data[i] = data[i-1];
-    }
-    
-    data[0] = _d;
-}
-
-void DataController::draw()
-{
-    draw(0.0, 0.0);
-}
-
-void DataController::draw(float posx, float posy)
-{
-    draw(posx, posy, width, height, min, max);
-}
 
 
-void DataController::draw(float posx, float posy, float w, float h, float min, float max)
-{
-    ofPushStyle();
-	ofNoFill();
-	ofSetColor(ofColor::white);
-	ofRect(posx, posy, w, h);
-	ofSetColor(120, 120, 120);
-	ofLine(posx, posy+h/2.0, posx+w, posy+h/2.0);
-    
-	ofSetColor(ofColor::green);
-	glBegin(GL_LINE_STRIP);
-	for(int i=0; i<bufferLength; i++){
-		glVertex3d(posx+(w/(float)bufferLength)*i, posy + h - ofMap(data[i], min, max, 0.0, h), 0.0);
-	}
-	glEnd();
-    
-    ofPopStyle();
-}
-
-void DataController::setSize(float _width, float _height)
-{
-    width = _width;
-    height = _height;
-}
-
-void DataController::setRange(float _min, float _max)
-{
-    min = _min;
-    max = _max;
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,6 +237,8 @@ void DataController::setRange(float _min, float _max)
  */
 class BaseSceneInterfase
 {
+    ofxTimeline timeline;
+    
     
 public:
     BaseSceneInterfase(){};
@@ -253,5 +258,51 @@ public:
     virtual void mouseDragged( int x, int y, int button ){}
     virtual void mousePressed( int x, int y, int button ){}
     virtual void mouseReleased(int x, int y, int button ){}
+    
+    inline string getName()
+    {
+        const type_info& id = typeid(*this);
+        int stat;
+        char *name = abi::__cxa_demangle(id.name(), 0, 0, &stat);
+        if (stat != 0) LOG_WARNING << "faild get name";
+        free(name);
+        string dst(name);
+        return dst;
+    }
+
+    void setupTimeline()
+    {
+        timeline.setup();
+        timeline.setName(getName());
+        timeline.setLoopType(OF_LOOP_NONE);
+        timeline.setFrameRate(60);
+        timeline.disable();
+    }
+    void setEnableTimeline(bool enable){ enable ? timeline.enable() : timeline.disable(); }
+    void drawTimeline(){ timeline.draw(); }
 };
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//      share values
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace share
+{
+    static float elapsedTime = 0;
+    
+    typedef shared_ptr<DataController> datasetPtr;
+    static vector<datasetPtr> datasets;
+}
+
+#define DATASETS share::datasets
+#define FOR_DATASETS for (vector<share::datasetPtr>::iterator it = share::datasets.begin(); it != share::datasets.end(); it++)
+
 

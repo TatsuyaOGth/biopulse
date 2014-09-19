@@ -9,13 +9,23 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
     ofSetWindowShape(plant::width, plant::height);
+    ofxTimeline::removeCocoaMenusFromGlut("biopulse");
+    
+    //----------
+    // set dataset
+    //----------
+    for (int i = 0; i < common::numDatasetPath; i++) {
+        share::datasets.push_back(share::datasetPtr(new DataController(ofToString(common::ht[i]))));
+    }
     
     //----------
     // create scenes
     //----------
     mScenes.push_back(scenePtr(new Scene01()));
     mNumCurrentScene = 0;
-    FOR_SCENES it->get()->setup();
+    CURRENT_SCENE->setup();
+    FOR_SCENES { it->get()->setupTimeline(); }
+    CURRENT_SCENE->setEnableTimeline(true);
     
     //-----------
     // init values
@@ -25,6 +35,9 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    share::elapsedTime = ofGetElapsedTimef();
+    FOR_DATASETS { (*it)->update(); }
+    
     CURRENT_SCENE->update();
 }
 
@@ -35,6 +48,7 @@ void ofApp::draw(){
     
     CURRENT_SCENE->draw();
 
+    if (mMode == 3) CURRENT_SCENE->drawTimeline();
     if (mMode == 2) plant::drawPlantGuide();
     if (mMode == 1) {
         stringstream s;
@@ -49,15 +63,20 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     switch (key) {
         case ' ':
-            mMode = (mMode + 1) % 3;
+            mMode = (mMode + 1) % 4;
+            if (mMode == 3) {
+                CURRENT_SCENE->setEnableTimeline(true);
+            } else {
+                CURRENT_SCENE->setEnableTimeline(false);
+            }
             break;
+        
             
         case OF_KEY_LEFT:
             break;
             
         default: CURRENT_SCENE->keyPressed(key); break;
     }
-
 }
 
 //--------------------------------------------------------------
@@ -90,5 +109,15 @@ void ofApp::mouseReleased(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
     CURRENT_SCENE->windowResized(w, h);
+}
+
+int ofApp::changeScene(int mv)
+{
+    if (mv < 0) return mv;
+    if (mv >= mScenes.size()) return mv;
+    CURRENT_SCENE->exit();
+    mNumCurrentScene = mv;
+    CURRENT_SCENE->setup();
+    
 }
 
