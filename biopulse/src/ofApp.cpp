@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "Scene01.hpp"
+#include "Scene02.hpp"
 
 #define FOR_SCENES for (vector<scenePtr>::iterator it = mScenes.begin(); it != mScenes.end(); it++)
 #define CURRENT_SCENE mScenes[mNumCurrentScene]
@@ -22,10 +23,16 @@ void ofApp::setup(){
     // create scenes
     //----------
     mScenes.push_back(scenePtr(new Scene01()));
+    mScenes.push_back(scenePtr(new Scene02()));
+    
     mNumCurrentScene = 0;
-    CURRENT_SCENE->setup();
-    FOR_SCENES { it->get()->setupTimeline(); }
+    FOR_SCENES {
+        it->get()->setupTimeline();
+        it->get()->setup();
+    }
     CURRENT_SCENE->setEnableTimeline(true);
+//    CURRENT_SCENE->setup();
+    
     
     //-----------
     // init values
@@ -47,8 +54,16 @@ void ofApp::draw(){
     
     
     CURRENT_SCENE->draw();
+    
+    plant::drawPlantMask();
 
-    if (mMode == 3) CURRENT_SCENE->drawTimeline();
+    ofSetColor(255);
+    if (mMode == 3) {
+        ofSetColor(0, 0, 0, 120);
+        ofRect(0, 0, ofGetWidth(), ofGetHeight());
+        ofSetColor(255, 255, 255, 255);
+        CURRENT_SCENE->drawTimeline();
+    }
     if (mMode == 2) plant::drawPlantGuide();
     if (mMode == 1) {
         stringstream s;
@@ -62,18 +77,10 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     switch (key) {
-        case ' ':
-            mMode = (mMode + 1) % 4;
-            if (mMode == 3) {
-                CURRENT_SCENE->setEnableTimeline(true);
-            } else {
-                CURRENT_SCENE->setEnableTimeline(false);
-            }
-            break;
+        case OF_KEY_TAB: mMode = (mMode + 1) % 4; break;
+        case OF_KEY_LEFT:  mNumCurrentScene = changeScene(-1); break;
+        case OF_KEY_RIGHT: mNumCurrentScene = changeScene( 1); break;
         
-            
-        case OF_KEY_LEFT:
-            break;
             
         default: CURRENT_SCENE->keyPressed(key); break;
     }
@@ -113,11 +120,14 @@ void ofApp::windowResized(int w, int h){
 
 int ofApp::changeScene(int mv)
 {
-    if (mv < 0) return mv;
-    if (mv >= mScenes.size()) return mv;
-    CURRENT_SCENE->exit();
-    mNumCurrentScene = mv;
-    CURRENT_SCENE->setup();
-    
+    int tmp = mv + mNumCurrentScene;
+    if (tmp < 0) return mNumCurrentScene;
+    if (tmp >= mScenes.size()) return mNumCurrentScene;
+//    CURRENT_SCENE->exit();
+    CURRENT_SCENE->setEnableTimeline(false);
+    mNumCurrentScene += mv;
+//    CURRENT_SCENE->setup();
+    CURRENT_SCENE->setEnableTimeline(true);
+    return mNumCurrentScene;
 }
 

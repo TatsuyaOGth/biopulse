@@ -65,6 +65,7 @@
 		8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */; };
 		9102D0609CDD0B902F138C68 /* ofxDelaunay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBE3E908E4BB3468853C50ED /* ofxDelaunay.cpp */; };
 		9119BFC53670A98106E367BB /* ofxMSATimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EBE6922DE4DCB97639B65F /* ofxMSATimer.cpp */; };
+		919225EB19CC4E3A000720A9 /* ofxEasingCam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 919225E419CC4E3A000720A9 /* ofxEasingCam.cpp */; };
 		91D90EB319CB6BFB0094C201 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 91D90E2719CB6BFA0094C201 /* kiss_fft.c */; };
 		91D90EB419CB6BFB0094C201 /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = 91D90E2819CB6BFA0094C201 /* kiss_fftr.c */; };
 		91D90EB519CB6BFB0094C201 /* ofOpenALSoundPlayer_TimelineAdditions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91D90E2B19CB6BFA0094C201 /* ofOpenALSoundPlayer_TimelineAdditions.cpp */; };
@@ -311,6 +312,9 @@
 		8FCE85CD7CE653733B1C4438 /* b2EdgeAndCircleContact.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2EdgeAndCircleContact.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h; sourceTree = SOURCE_ROOT; };
 		911A08FE19CAD64800C03816 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../../common.h; sourceTree = "<group>"; };
 		911A090419CAF06600C03816 /* Scene01.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene01.hpp; sourceTree = "<group>"; };
+		919225E419CC4E3A000720A9 /* ofxEasingCam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingCam.cpp; sourceTree = "<group>"; };
+		919225E519CC4E3A000720A9 /* ofxEasingCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingCam.h; sourceTree = "<group>"; };
+		919225F119CC5DF0000720A9 /* Scene02.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene02.hpp; sourceTree = "<group>"; };
 		91D90E2319CB6BFA0094C201 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
 		91D90E2419CB6BFA0094C201 /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
 		91D90E2619CB6BFA0094C201 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
@@ -492,7 +496,7 @@
 		E4AF3F64CAC776D23849712F /* ofxBox2dPolygon.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxBox2dPolygon.h; path = ../../../addons/ofxBox2d/src/ofxBox2dPolygon.h; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* biopulseDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = biopulseDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
+		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -832,6 +836,24 @@
 				ABE37A0BB21B3D890EFC285B /* src */,
 			);
 			name = ofxTimecode;
+			sourceTree = "<group>";
+		};
+		919225CD19CC4E3A000720A9 /* ofxEasingCam */ = {
+			isa = PBXGroup;
+			children = (
+				919225E319CC4E3A000720A9 /* src */,
+			);
+			name = ofxEasingCam;
+			path = ../../../addons/ofxEasingCam;
+			sourceTree = "<group>";
+		};
+		919225E319CC4E3A000720A9 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				919225E419CC4E3A000720A9 /* ofxEasingCam.cpp */,
+				919225E519CC4E3A000720A9 /* ofxEasingCam.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		91D90CCE19CB6BF90094C201 /* ofxTimeline */ = {
@@ -1335,6 +1357,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				919225CD19CC4E3A000720A9 /* ofxEasingCam */,
 				91D90EFA19CB6C170094C201 /* ofxXmlSettings */,
 				91D90CCE19CB6BF90094C201 /* ofxTimeline */,
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
@@ -1474,6 +1497,7 @@
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				911A090419CAF06600C03816 /* Scene01.hpp */,
+				919225F119CC5DF0000720A9 /* Scene02.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1677,6 +1701,7 @@
 				4D09B9611BCF4603581DFEE4 /* ofxBox2dEdge.cpp in Sources */,
 				91D90EC319CB6BFB0094C201 /* ofxTimeline.cpp in Sources */,
 				12548B44285B5C07EEA5379C /* ofxBox2dJoint.cpp in Sources */,
+				919225EB19CC4E3A000720A9 /* ofxEasingCam.cpp in Sources */,
 				DFACEC3A1E9D23315321D7EA /* ofxBox2dPolygon.cpp in Sources */,
 				B103DF2084E0F38D03E0E6F1 /* ofxBox2dRect.cpp in Sources */,
 				1B19FD7E51B73109C4AC02D9 /* b2BroadPhase.cpp in Sources */,
@@ -1868,6 +1893,7 @@
 					"\"$(SRCROOT)/../../../addons/ofxTimeline/src\"",
 					"\"$(SRCROOT)/../../../addons/ofxXmlSettings/libs\"",
 					"\"$(SRCROOT)/../../../addons/ofxXmlSettings/src\"",
+					"\"$(SRCROOT)/../../../addons/ofxEasingCam/src\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -1959,6 +1985,7 @@
 					"\"$(SRCROOT)/../../../addons/ofxTimeline/src\"",
 					"\"$(SRCROOT)/../../../addons/ofxXmlSettings/libs\"",
 					"\"$(SRCROOT)/../../../addons/ofxXmlSettings/src\"",
+					"\"$(SRCROOT)/../../../addons/ofxEasingCam/src\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (

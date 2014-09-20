@@ -55,10 +55,14 @@ namespace plant
     static const int edgeY = 0;
     static const int edgeW = width;
     static const int edgeH = height * 0.25;
+    static const int edgeXW = edgeX + edgeW;
+    static const int edgeYH = edgeY + edgeH;
     static const int bodyX = 0;
     static const int bodyY = edgeH;
     static const int bodyW = width;
     static const int bodyH = height * 0.75;
+    static const int bodyXW = bodyX + bodyW;
+    static const int bodyYH = bodyY + bodyH;
     static const ofRectangle edgeRect(edgeX, edgeY, edgeW, edgeH);
     static const ofRectangle bodyRect(bodyX, bodyY, bodyW, bodyH);
     
@@ -67,6 +71,8 @@ namespace plant
     static const ofVec2f bodyP3(bodyW * 0.8, edgeH + bodyH);
     static const ofVec2f bodyP4(bodyW * 0.2, edgeH + bodyH);
     
+    inline float getEdgeCenterX(){ return ((float)edgeX + ((float)edgeW * 0.5)); }
+    inline float getEdgeCenterY(){ return ((float)edgeY + ((float)edgeH * 0.5)); }
     
     inline void drawPlantGuide()
     {
@@ -81,6 +87,24 @@ namespace plant
         glVertex2f(bodyP2.x, bodyP2.y);
         glVertex2f(bodyP3.x, bodyP3.y);
         glVertex2f(bodyP4.x, bodyP4.y);
+        glEnd();
+#endif
+        ofPopStyle();
+    }
+    
+    inline void drawPlantMask()
+    {
+        ofSetColor(0, 0, 0, 255);
+#ifndef TARGET_OPENGLES
+        glBegin(GL_TRIANGLE_STRIP);
+        glVertex2f(bodyP1.x, bodyP1.y);
+        glVertex2f(bodyP4.x, bodyP4.y);
+        glVertex2f(bodyX, bodyYH);
+        glEnd();
+        glBegin(GL_TRIANGLE_STRIP);
+        glVertex2f(bodyP2.x, bodyP2.y);
+        glVertex2f(bodyP3.x, bodyP3.y);
+        glVertex2f(bodyXW, bodyYH);
         glEnd();
 #endif
         ofPopStyle();
@@ -112,12 +136,15 @@ namespace common
  */
 class DataController
 {
+    float tmpOffset;
+    
 public:
     float width, height, speed, gain;
     const string mDataPath;
     int bufferLength;
     bool bPlay;
     int offset;
+    
     typedef struct _Data {
         string timestamp;
         float voltage;
@@ -162,13 +189,15 @@ public:
         speed = 1;
         bPlay = false;
         offset = 0;
+        tmpOffset = offset;
         gain = 1.0;
     }
     
     void update()
     {
         if (bPlay) {
-            offset += speed;
+            tmpOffset += speed;
+            offset = (int)tmpOffset;
             if (offset < 0) offset = data.size() - 1;
             if (offset > data.size() - 1) offset = 0;
         }
@@ -182,34 +211,22 @@ public:
         int datasize = data.size() - 1;
         int start = offset;
         int end = offset + bufferLength;
-//        if (ofGetStyle().bFill) {
-//            glBegin(GL_POLYGON);
-//            glVertex2d(posx + w, posy + (h * 0.5));
-//            glVertex2d(posx, posy + (h * 0.5));
-//            
-//        } else {
-//            glBegin(GL_LINE_STRIP);
-//        }
-        
         ofBeginShape();
         if (ofGetStyle().bFill) ofVertex(posx, posy + (h * 0.5));
         for(int i = start; i < end; i++) {
             int index = i < 0 ? datasize - i : i;
             index = index > datasize ? index - datasize : index;
-//            glVertex2d(posx + ofMap(i, start, end, 0, w, true), (posy + (h * 0.5)) + (data[index].voltage * gain));
             ofVertex(posx + ofMap(i, start, end, 0, w, true), (posy + (h * 0.5)) + (data[index].voltage * gain));;
         }
         if (ofGetStyle().bFill) ofVertex(posx + w, posy + (h * 0.5));
         ofEndShape();
-//        glEnd();
     }
-    
     void setSize(float _width, float _height)
     {
         width = _width;
         height = _height;
     }
-    void setSpeed(int sp){ speed = sp; }
+    void setSpeed(float sp){ speed = sp; }
     void setBufferLemgth(int b){ bufferLength = b; }
     void play(){ bPlay = true; }
     void stop(){ bPlay = false; }
@@ -218,6 +235,17 @@ public:
     void setOffset(int v){ offset = v; }
     void setGain(float v){ gain = v; }
     float getPosition() { return offset == 0 ? offset : (float)offset / data.size(); }
+    Data & getDataOnOffset(){ return data[offset]; }
+    float getVoltageOnOffset(){ return data[offset].voltage * gain; }
+    Data & getDataOnStartPoint(){ return data[offset + bufferLength - 1]; }
+    float getVoltageOnStartPoint(){ return data[offset + bufferLength - 1].voltage * gain; }
+    float getVoltage()
+    {
+        int start = offset;
+        int end = offset + bufferLength;
+        int pos = ((end - start) * 0.5) + start;
+        return data[pos].voltage * gain;
+    }
     
 };
 
@@ -237,11 +265,14 @@ public:
  */
 class BaseSceneInterfase
 {
+protected:
+    typedef BaseSceneInterfase base;
     ofxTimeline timeline;
-    
-    
+        
 public:
-    BaseSceneInterfase(){};
+    BaseSceneInterfase()
+    {
+    };
     virtual ~BaseSceneInterfase(){};
     
     virtual void setup(){}
@@ -278,7 +309,14 @@ public:
         timeline.setFrameRate(60);
         timeline.disable();
     }
-    void setEnableTimeline(bool enable){ enable ? timeline.enable() : timeline.disable(); }
+    void setEnableTimeline(bool enable)
+    {
+        if (enable) {
+            timeline.enable();
+        } else {
+            timeline.disable();
+        }
+    }
     void drawTimeline(){ timeline.draw(); }
 };
 
