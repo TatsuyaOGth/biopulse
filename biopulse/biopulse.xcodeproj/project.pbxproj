@@ -314,6 +314,8 @@
 		919225E419CC4E3A000720A9 /* ofxEasingCam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingCam.cpp; sourceTree = "<group>"; };
 		919225E519CC4E3A000720A9 /* ofxEasingCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingCam.h; sourceTree = "<group>"; };
 		919225F119CC5DF0000720A9 /* Scene02.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene02.hpp; sourceTree = "<group>"; };
+		91AE56FB19CFB47A00028DC7 /* Ground.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ground.hpp; sourceTree = "<group>"; };
+		91AE56FC19CFB67B00028DC7 /* BaseContentsInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseContentsInterface.h; sourceTree = "<group>"; };
 		91D1406719CDF40500896CCC /* BaseSceneInterface.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseSceneInterface.hpp; sourceTree = "<group>"; };
 		91D1406919CDF45400896CCC /* DataController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DataController.hpp; sourceTree = "<group>"; };
 		91D1406A19CDF57800896CCC /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
@@ -856,6 +858,25 @@
 				919225E519CC4E3A000720A9 /* ofxEasingCam.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		91AE56F919CFB42D00028DC7 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				91D1406719CDF40500896CCC /* BaseSceneInterface.hpp */,
+				911A090419CAF06600C03816 /* Scene01.hpp */,
+				919225F119CC5DF0000720A9 /* Scene02.hpp */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		91AE56FA19CFB43800028DC7 /* Contents */ = {
+			isa = PBXGroup;
+			children = (
+				91AE56FC19CFB67B00028DC7 /* BaseContentsInterface.h */,
+				91AE56FB19CFB47A00028DC7 /* Ground.hpp */,
+			);
+			name = Contents;
 			sourceTree = "<group>";
 		};
 		91D90CCE19CB6BF90094C201 /* ofxTimeline */ = {
@@ -1499,9 +1520,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				91D1406719CDF40500896CCC /* BaseSceneInterface.hpp */,
-				911A090419CAF06600C03816 /* Scene01.hpp */,
-				919225F119CC5DF0000720A9 /* Scene02.hpp */,
+				91AE56F919CFB42D00028DC7 /* Scenes */,
+				91AE56FA19CFB43800028DC7 /* Contents */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
