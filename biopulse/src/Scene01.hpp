@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../common.h"
+#include "BaseSceneInterface.hpp"
 #include "ofxEasingCam.h"
 #include "ofxAnimationPrimitives.h"
 

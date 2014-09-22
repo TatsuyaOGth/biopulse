@@ -1,7 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
-#include "../../common.h"
+#include "common.h"
+#include "DataController.hpp"
+#include "BaseSceneInterface.hpp"
 #include "ofxExtras.h"
 
 class ofApp : public ofBaseApp{

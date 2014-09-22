@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../common.h"
+#include "BaseSceneInterface.hpp"
 
 class Scene02 : public BaseSceneInterfase
 {
