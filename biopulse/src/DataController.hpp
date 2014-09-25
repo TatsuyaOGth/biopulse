@@ -14,11 +14,12 @@ public:
     bool bPlay;
     int offset;
     
-    typedef struct _Data {
+    typedef struct _Data
+    {
         string timestamp;
         float voltage;
     } Data;
-    vector<Data> data;
+    vector<Data *> data;
     
     DataController(const string & path, bool header = true): mDataPath(path)
     {
@@ -43,8 +44,11 @@ public:
                 LOG_WARNING << "column is low";
                 continue;
             }
-            Data d = {col[0], ofToFloat(col[1]) };
-            data.push_back(d);
+//            Data d = {col[0], ofToFloat(col[1]) };
+//            data.push_back(d);
+            data.push_back(new Data);
+            data.back()->timestamp = col[0];
+            data.back()->voltage = ofToFloat(col[1]);
         }
         if (data.empty()) {
             LOG_WARNING << "dataset is empty: " << path;
@@ -84,11 +88,12 @@ public:
         for(int i = start; i < end; i++) {
             int index = i < 0 ? datasize - i : i;
             index = index > datasize ? index - datasize : index;
-            ofVertex(posx + ofMap(i, start, end, 0, w, true), (posy + (h * 0.5)) + (data[index].voltage * gain));;
+            ofVertex(posx + ofMap(i, start, end, 0, w, true), (posy + (h * 0.5)) + (data[index]->voltage * gain));;
         }
         if (ofGetStyle().bFill) ofVertex(posx + w, posy + (h * 0.5));
         ofEndShape();
     }
+    
     void setSize(float _width, float _height)
     {
         width = _width;
@@ -103,16 +108,29 @@ public:
     void setOffset(int v){ offset = v; }
     void setGain(float v){ gain = v; }
     float getPosition() { return offset == 0 ? offset : (float)offset / data.size(); }
-    Data & getDataOnOffset(){ return data[offset]; }
-    float getVoltageOnOffset(){ return data[offset].voltage * gain; }
-    Data & getDataOnStartPoint(){ return data[offset + bufferLength - 1]; }
-    float getVoltageOnStartPoint(){ return data[offset + bufferLength - 1].voltage * gain; }
+    Data * getDataOnOffset(){ return data[offset]; }
+    float getVoltageOnOffset(){ return data[offset]->voltage * gain; }
+    Data * getDataOnStartPoint(){ return data[offset + bufferLength - 1]; }
+    float getVoltageOnStartPoint(){ return data[offset + bufferLength - 1]->voltage * gain; }
     float getVoltage()
     {
         int start = offset;
         int end = offset + bufferLength;
         int pos = ((end - start) * 0.5) + start;
-        return data[pos].voltage * gain;
+        return data[pos]->voltage * gain;
+    }
+    
+    void getDataBetween(vector<Data *> * dst, int start, int end)
+    {
+        if (start < 0 || start >= data.size()) return;
+        if (end   < 0 || end   >= data.size()) return;
+        if (start >= end) return;
+        
+        int size = end - start;
+        dst->clear();
+        for (int i = start; i < end; i++) {
+            dst->push_back(data[i]);
+        }
     }
     
 };

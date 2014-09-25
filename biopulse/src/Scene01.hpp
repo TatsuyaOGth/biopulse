@@ -52,13 +52,14 @@ public:
     }
 };
 
-ofxAnimationPrimitives::InstanceManager mScanLines;
 
 class Scene01 : public BaseSceneInterfase
 {
     
     share::datasetPtr * mDataset;
     deque<string> mDataList;
+    ofxAnimationPrimitives::InstanceManager mScanLines;
+    ofxAnimationPrimitives::InstanceManager mContents;
     
 public:
     
@@ -84,9 +85,9 @@ public:
         mDataset->get()->setSpeed(timeline.getValue("speed"));
         mDataset->get()->setGain(timeline.getValue("gain"));
         
-        DataController::Data & d = mDataset->get()->getDataOnStartPoint();
+        DataController::Data * d = mDataset->get()->getDataOnStartPoint();
         string idx = ofToString(mDataset->get()->offset, 100);
-        mDataList.push_back(idx + " date: " + d.timestamp + " voltage: " + ofToString(d.voltage));
+        mDataList.push_back(idx + " date: " + d->timestamp + " voltage: " + ofToString(d->voltage));
         if (mDataList.size() > 36) {
             mDataList.pop_front();
         }
@@ -95,6 +96,7 @@ public:
 //            (*it)->update();
 //        }
         mScanLines.update();
+        mContents.update();
     }
     
     void draw()
@@ -109,6 +111,7 @@ public:
         mScanLines.draw();
         
 //        drawPlane();
+
         drawDataList();
         drawCircleGraph();
         

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofxAnimationPrimitives.h"
+#include "Constants.h"
 
 
 class BaseContentsInterface : public ofxAnimationPrimitives::Instance
@@ -46,4 +47,23 @@ public:
         draw();
         mFbo.end();
     }
+};
+
+
+class BaseContentsManager : public ofxAnimationPrimitives::InstanceManager
+{
+protected:
+    vector<BaseContentsInterface *> instances;
+    
+    template <typename T>
+    T* setupInstance(T* o)
+    {
+        o->class_id = RTTI::getTypeID<T>();
+        instances.push_back(o);
+        return o;
+    }
+    
+public:
+    
+
 };
