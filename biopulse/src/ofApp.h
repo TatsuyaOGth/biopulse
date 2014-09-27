@@ -23,6 +23,8 @@ public:
     
     int changeScene(int mv);
     
+    DataController * mDataController;
+    
     typedef shared_ptr<BaseSceneInterfase> scenePtr;
     vector<scenePtr> mScenes;
     int mNumCurrentScene;

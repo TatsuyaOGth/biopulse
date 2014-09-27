@@ -10,7 +10,6 @@
 class Scene01 : public BaseSceneInterfase
 {
     
-    share::datasetPtr * mDataset;
     deque<string> mDataList;
 
     BaseContentsController mHead;
@@ -20,11 +19,6 @@ public:
     
     void setup()
     {
-        mDataset = &share::datasets[0];
-        mDataset->get()->setBufferLemgth(256);
-        mDataset->get()->stop();
-        mDataset->get()->setGain(200);
-        
         timeline.setDurationInSeconds(30);
         timeline.addFlags("flag");
         timeline.addCurves("speed", ofRange(0.1, 3));
@@ -62,12 +56,6 @@ public:
     
     void update()
     {
-        mDataset->get()->setSpeed(timeline.getValue("speed"));
-        mDataset->get()->setGain(timeline.getValue("gain"));
-        
-        DataController::Data * d = mDataset->get()->getDataOnStartPoint();
-        string idx = ofToString(mDataset->get()->offset, 100);
-        mDataList.push_back(idx + " date: " + d->timestamp + " voltage: " + ofToString(d->voltage));
         if (mDataList.size() > 36) {
             mDataList.pop_front();
         }
@@ -84,8 +72,8 @@ public:
         
         ofBackground(timeline.getColor("bgcolor"));
         
-        mHead.draw();
-        mBody.draw();
+        mHead.draw(plant::edgeX, plant::edgeY, plant::edgeW, plant::edgeH);
+        mBody.draw(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
 
         drawDataList();
         drawCircleGraph();
@@ -95,12 +83,12 @@ public:
     
     void getFlag(ofxTLBangEventArgs & args)
     {
-        if (args.flag == "start") {
-            mDataset->get()->play();
-        }
-        if (args.flag == "stop") {
-            mDataset->get()->stop();
-        }
+//        if (args.flag == "start") {
+//            mDataset->get()->play();
+//        }
+//        if (args.flag == "stop") {
+//            mDataset->get()->stop();
+//        }
     }
     
     void keyPressed( int key )

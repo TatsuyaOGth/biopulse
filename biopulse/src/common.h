@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "DataController.hpp"
 
 //==============================================================
 // utils
@@ -110,17 +111,7 @@ namespace plant
     }
 }
 
-
-
-namespace common
+namespace share
 {
-    
-    // biopulse data
-    static const int numDatasetPath = 2;
-    static const char* ht[] = {
-        "ycam-3-20130501.csv",
-        "symbiotica-26-20140916.csv"
-    };
-    
+    static float elapsedTimef = 0;
 }
-

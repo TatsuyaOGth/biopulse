@@ -49,14 +49,7 @@ public:
     
     void draw()
     {
-        ofPushMatrix();
-        ofTranslate(plant::edgeX, plant::edgeY);
-        mHead.draw();
-        ofPopMatrix();
-        
-        ofPushMatrix();
-        ofTranslate(plant::bodyX, plant::bodyY);
-        mBody.draw();
-        ofPopMatrix();
+        mHead.draw(plant::edgeX, plant::edgeY, plant::edgeW, plant::edgeH);
+        mBody.draw(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
     }
 };

@@ -9,6 +9,8 @@ class DataLabel : public BaseContentsInterface
     
 public:
     
+    
+    
     void update()
     {
         

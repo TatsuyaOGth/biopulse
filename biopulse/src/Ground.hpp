@@ -16,7 +16,7 @@ public:
     
     Ground()
     {
-        cam.setup(plant::bodyW, plant::bodyH);
+        cam.setup(getWidth(), getHeight());
         lig.setup();
         lig.setDirectional();
         mSpeed = 0.010699;
@@ -29,7 +29,7 @@ public:
         previous = current;
         
         // generate a noisy 3d position over time
-        float t = (2 + share::elapsedTime) * mSpeed;
+        float t = (2 + share::elapsedTimef) * mSpeed;
         current.x = ofSignedNoise(t, 0, 0);
         current.y = ofSignedNoise(0, t, 0);
         current.z = ofSignedNoise(0, 0, t);
@@ -62,7 +62,7 @@ public:
         ofDisableDepthTest();
         
         
-        drawRaderWindowMarks(6, (abs(sin(share::elapsedTime))) * 20 + 5);
+        drawRaderWindowMarks(6, (abs(sin(share::elapsedTimef))) * 20 + 5);
         ofPopStyle();
     }
     
@@ -153,11 +153,11 @@ public:
     
     void drawRaderWindowMarks(int res, float size)
     {
-        int xstep = (int)(plant::bodyW  / res);
+        int xstep = (int)(getWidth()  / res);
         int ystep = xstep;
         
-        for (int y = 0; y <= plant::bodyH; y += ystep) {
-            for (int x = 0; x <= plant::bodyW; x += xstep) {
+        for (int y = 0; y <= getHeight(); y += ystep) {
+            for (int x = 0; x <= getWidth(); x += xstep) {
                 ofLine(x    - (size * 0.5), y, x + (size * 0.5), y);
                 ofLine(x, y - (size * 0.5), x, y + (size * 0.5)   );
             }

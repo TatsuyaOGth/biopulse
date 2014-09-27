@@ -14,6 +14,8 @@ class BaseContentsInterface
     {
         if (mFbo.isAllocated()) {
             mFbo.begin();
+            ofBackground(0, 0, 0, 0);
+            ofSetColor(255, 255, 255, 255);
             draw();
             mFbo.end();
         }
@@ -22,6 +24,9 @@ class BaseContentsInterface
 protected:
     
     bool bPlay;
+    
+    float getWidth()  { return mFbo.getWidth();  }
+    float getHeight() { return mFbo.getHeight(); }
     
 public:
     
@@ -86,23 +91,26 @@ public:
         }
     }
     
-    void draw()
+    void draw(int x, int y, int w, int h)
     {
         glPushAttrib(GL_ALL_ATTRIB_BITS);
         ofPushMatrix();
         ofPushStyle();
-        
+        drawInstance(x, y, w, h);
+        ofPopStyle();
+        ofPopMatrix();
+        glPopAttrib();
+    }
+    
+    void drawInstance(int x, int y, int w, int h)
+    {
         vector<BaseContentsInterface *>::iterator it = instances.begin();
         while (it != instances.end())
         {
             BaseContentsInterface *o = *it;
-            if (o->isPlay()) o->draw();
+            if (o->isPlay()) o->draw(x, y, w, h);
             it++;
         }
-        
-        ofPopStyle();
-        ofPopMatrix();
-        glPopAttrib();
     }
     
     void play(int n)
