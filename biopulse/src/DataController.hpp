@@ -8,11 +8,14 @@ typedef struct _Data
     float voltage;
 } Data;
 
+typedef vector<Data *> dataset_type;
+
 class DataSet
 {
     const string mDataPath;
-    vector<Data *> data;
+    dataset_type data;
     bool bDataLoaded;
+    int mPointer;
     
 public:
 
@@ -20,7 +23,7 @@ public:
     {
         bDataLoaded = true;
         ofFile file(path);
-        if (file.exists()) {
+        if (!file.exists()) {
             bDataLoaded = false;
             return;
         }
@@ -52,11 +55,11 @@ public:
             bDataLoaded = false;
         } else {
             ofLogNotice() << "load dataset: " << path;
-            bDataLoaded = false;
         }
+        mPointer = 0;
     }
     
-    void getDataBetween(vector<Data *> * dst, int start, int end)
+    void getDataBetween(dataset_type * dst, int start, int end)
     {
         if (start < 0 || start >= data.size()) return;
         if (end   < 0 || end   >= data.size()) return;
@@ -70,6 +73,25 @@ public:
     }
     
     bool isDataLoaded() { return bDataLoaded; }
+    vector<Data *> & getData() { return data; }
+    Data * getCurrentData()
+    {
+        if (data.empty()) return NULL;
+        if (mPointer < 0) return NULL;
+        if (mPointer >= data.size()) mPointer = 0; // loop
+        return data[mPointer];
+    }
+    Data * getData(int i)
+    {
+        mPointer = i;
+        return getCurrentData();
+    }
+    Data * getNextData() {
+        mPointer++;
+        return getCurrentData();
+    }
+    int getDataSize() { return data.size(); }
+    
     
 };
 
@@ -93,7 +115,11 @@ public:
     bool loadDataSet(const string & dirPath)
     {
         ofDirectory dir;
-        dir.listDir(dirPath);
+        int size = dir.listDir(dirPath);
+        if (size == 0) {
+            ofLogError() << "dataset dir is empty: " << dirPath;
+            return false;
+        }
         for (int i = 0; i < dir.size(); i++) {
             if (!addDataSet(dir.getPath(i))) {
                 return false;
@@ -113,5 +139,12 @@ public:
     
 };
 
+namespace data
+{
+    static int bufferLength = 0;
+    static float gain = 1.0;
+}
+
 #define DATA_CONTROLLER DataController::getInstance()
-#define DATASET DataController::getInstance().mDataSet
+#define DATASET DataController::getInstance()->mDataSet
+#define DATASET_IT vector<shared_ptr<DataSet> >::iterator

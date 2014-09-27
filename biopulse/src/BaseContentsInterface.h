@@ -13,11 +13,17 @@ class BaseContentsInterface
     inline void rendering()
     {
         if (mFbo.isAllocated()) {
+            glPushAttrib(GL_ALL_ATTRIB_BITS);
+            ofPushMatrix();
+            ofPushStyle();
             mFbo.begin();
             ofBackground(0, 0, 0, 0);
             ofSetColor(255, 255, 255, 255);
             draw();
             mFbo.end();
+            ofPopStyle();
+            ofPopMatrix();
+            glPopAttrib();
         }
     }
     

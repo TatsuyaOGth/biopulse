@@ -52,4 +52,10 @@ public:
         mHead.draw(plant::edgeX, plant::edgeY, plant::edgeW, plant::edgeH);
         mBody.draw(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
     }
+    
+    void keyPressed( int key )
+    {
+        mHead.sendMessageAll(key);
+        mBody.sendMessageAll(key);
+    }
 };

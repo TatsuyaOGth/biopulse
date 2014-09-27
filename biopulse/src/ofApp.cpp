@@ -15,7 +15,12 @@ void ofApp::setup(){
     //----------
     // set dataset
     //----------
-    DATA_CONTROLLER->loadDataSet("dataset");
+    if (!DATA_CONTROLLER->loadDataSet("dataset")) {
+        ofLogError() << "faild load dataset";
+        OF_EXIT_APP(1);
+    }
+    data::bufferLength = 256;
+    data::gain = 1;
     
     //----------
     // create scenes
@@ -36,11 +41,15 @@ void ofApp::setup(){
     // init values
     //-----------
     mMode = 0;
+    share::font.loadFont("EHSMB.TTF", 12);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    share::elapsedTimef = ofGetElapsedTimef();
+    share::elapsedTimef         = ofGetElapsedTimef();
+    share::elapsedTimeMicros    = ofGetElapsedTimeMicros();
+    share::elapsedTimeMillis    = ofGetElapsedTimeMillis();
+    
     
     CURRENT_SCENE->update();
 }

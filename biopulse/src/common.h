@@ -114,4 +114,7 @@ namespace plant
 namespace share
 {
     static float elapsedTimef = 0;
+    static long long elapsedTimeMillis = 0;
+    static long long elapsedTimeMicros = 0;
+    static ofTrueTypeFont font;
 }
