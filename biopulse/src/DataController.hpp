@@ -3,6 +3,13 @@
 #include "ofMain.h"
 #include "common.h"
 
+class DataSet
+{
+    
+};
+
+
+
 class DataController
 {
     float tmpOffset;
@@ -134,3 +141,4 @@ public:
     }
     
 };
+

@@ -311,11 +311,12 @@
 		8D1FC15F5941283F4A9E70D3 /* b2PrismaticJoint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2PrismaticJoint.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2PrismaticJoint.h; sourceTree = SOURCE_ROOT; };
 		8FCE85CD7CE653733B1C4438 /* b2EdgeAndCircleContact.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2EdgeAndCircleContact.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h; sourceTree = SOURCE_ROOT; };
 		911A090419CAF06600C03816 /* Scene01.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene01.hpp; sourceTree = "<group>"; };
+		9167419019D3D0B700D79D89 /* Ocsillators.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ocsillators.hpp; sourceTree = "<group>"; };
 		919225E419CC4E3A000720A9 /* ofxEasingCam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingCam.cpp; sourceTree = "<group>"; };
 		919225E519CC4E3A000720A9 /* ofxEasingCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingCam.h; sourceTree = "<group>"; };
 		919225F119CC5DF0000720A9 /* Scene02.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene02.hpp; sourceTree = "<group>"; };
 		91AE56FB19CFB47A00028DC7 /* Ground.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ground.hpp; sourceTree = "<group>"; };
-		91AE56FC19CFB67B00028DC7 /* BaseContentsInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseContentsInterface.h; sourceTree = "<group>"; };
+		91B7674519D69B6B00DACD9E /* DataLebel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataLebel.hpp; sourceTree = "<group>"; };
 		91D1406719CDF40500896CCC /* BaseSceneInterface.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseSceneInterface.hpp; sourceTree = "<group>"; };
 		91D1406919CDF45400896CCC /* DataController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DataController.hpp; sourceTree = "<group>"; };
 		91D1406A19CDF57800896CCC /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
@@ -416,6 +417,8 @@
 		91D90EFF19CB6C170094C201 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		91D90F0119CB6C170094C201 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
 		91D90F0219CB6C170094C201 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
+		91F949E019D5DB1700A2D34E /* BaseContentsInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseContentsInterface.h; sourceTree = "<group>"; };
+		91F949E219D5E78A00A2D34E /* VoltageIndicator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoltageIndicator.hpp; sourceTree = "<group>"; };
 		920CFC6D7E43EED2B7B03746 /* b2StackAllocator.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2StackAllocator.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Common/b2StackAllocator.cpp; sourceTree = SOURCE_ROOT; };
 		930EB8BAAA6A962411EC197D /* b2GearJoint.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2GearJoint.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2GearJoint.cpp; sourceTree = SOURCE_ROOT; };
 		94AB35643F3480EC84C829A7 /* b2Distance.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2Distance.h; path = ../../../addons/ofxBox2d/libs/Box2D/Collision/b2Distance.h; sourceTree = SOURCE_ROOT; };
@@ -873,8 +876,11 @@
 		91AE56FA19CFB43800028DC7 /* Contents */ = {
 			isa = PBXGroup;
 			children = (
-				91AE56FC19CFB67B00028DC7 /* BaseContentsInterface.h */,
+				91F949E019D5DB1700A2D34E /* BaseContentsInterface.h */,
+				91F949E219D5E78A00A2D34E /* VoltageIndicator.hpp */,
 				91AE56FB19CFB47A00028DC7 /* Ground.hpp */,
+				9167419019D3D0B700D79D89 /* Ocsillators.hpp */,
+				91B7674519D69B6B00DACD9E /* DataLebel.hpp */,
 			);
 			name = Contents;
 			sourceTree = "<group>";
