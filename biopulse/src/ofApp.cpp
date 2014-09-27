@@ -15,9 +15,7 @@ void ofApp::setup(){
     //----------
     // set dataset
     //----------
-    for (int i = 0; i < common::numDatasetPath; i++) {
-        share::datasets.push_back(share::datasetPtr(new DataController(ofToString(common::ht[i]))));
-    }
+    DATA_CONTROLLER->loadDataSet("dataset");
     
     //----------
     // create scenes
@@ -42,8 +40,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    share::elapsedTime = ofGetElapsedTimef();
-    FOR_DATASETS { (*it)->update(); }
+    share::elapsedTimef = ofGetElapsedTimef();
     
     CURRENT_SCENE->update();
 }

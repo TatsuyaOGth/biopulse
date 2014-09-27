@@ -1,7 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
-#include "../../common.h"
+#include "common.h"
+#include "DataController.hpp"
+#include "BaseSceneInterface.hpp"
 #include "ofxExtras.h"
 
 class ofApp : public ofBaseApp{
@@ -20,6 +22,8 @@ public:
     void windowResized(int w, int h);
     
     int changeScene(int mv);
+    
+    DataController * mDataController;
     
     typedef shared_ptr<BaseSceneInterfase> scenePtr;
     vector<scenePtr> mScenes;
