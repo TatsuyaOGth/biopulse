@@ -80,10 +80,7 @@ public:
                 share::font.drawString(mLines[i].label, mLines[i].offsetX + 20, getHeight() - 40);
             }
         }
-        
-
-        
-        share::font.drawString(ofToString(share::elapsedTimeMillis), 60, 150);
+                
     }
     
     void gotMessage(int msg)

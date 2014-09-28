@@ -2,6 +2,11 @@
 
 #include "common.h"
 
+namespace BaseContentsResources {
+    
+}
+
+
 class BaseContentsController;
 
 class BaseContentsInterface
