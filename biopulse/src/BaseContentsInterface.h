@@ -2,8 +2,9 @@
 
 #include "common.h"
 
-namespace BaseContentsResources {
-    
+namespace rs
+{
+    static ofQTKitPlayer radar;
 }
 
 
@@ -64,8 +65,11 @@ public:
         } else draw();
     }
     
-    inline void play() { bPlay = true; }
-    inline void stop() { bPlay = false; }
+    virtual void startPlaying() {}
+    virtual void endPlaying() {}
+    
+    inline void play() { bPlay = true; startPlaying(); }
+    inline void stop() { bPlay = false; endPlaying(); }
     inline bool isPlay() { return bPlay; }
     inline BaseContentsInterface * getThis() { return this; }
 };

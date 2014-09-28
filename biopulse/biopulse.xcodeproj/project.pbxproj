@@ -321,6 +321,7 @@
 		91D1406719CDF40500896CCC /* BaseSceneInterface.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseSceneInterface.hpp; sourceTree = "<group>"; };
 		91D1406919CDF45400896CCC /* DataController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DataController.hpp; sourceTree = "<group>"; };
 		91D1406A19CDF57800896CCC /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		91D40FB019D7F2C7002CEB53 /* Radar.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Radar.hpp; sourceTree = "<group>"; };
 		91D90E2319CB6BFA0094C201 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
 		91D90E2419CB6BFA0094C201 /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
 		91D90E2619CB6BFA0094C201 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
@@ -883,6 +884,7 @@
 				91AE56FB19CFB47A00028DC7 /* Ground.hpp */,
 				91F949E219D5E78A00A2D34E /* VoltageIndicator.hpp */,
 				9122D0B019D728CD00E7F84C /* DataMatrix.hpp */,
+				91D40FB019D7F2C7002CEB53 /* Radar.hpp */,
 			);
 			name = Contents;
 			sourceTree = "<group>";

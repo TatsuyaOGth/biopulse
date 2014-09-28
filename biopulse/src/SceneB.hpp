@@ -6,6 +6,7 @@
 #include "Ground.hpp"
 #include "VoltageIndicator.hpp"
 #include "DataMatrix.hpp"
+#include "Radar.hpp"
 
 
 class SceneB : public BaseSceneInterfase
@@ -33,6 +34,7 @@ public:
         mHead.createInstance<VoltageIndicator>()->play();
         mBody.createInstance<Ground>();
         mBody.createInstance<DataMatrix>()->play();
+//        mBody.createInstance<Radar>()->play();
         
         ofFbo::Settings s1;
         s1.width  = plant::edgeW;
