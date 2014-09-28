@@ -5,12 +5,11 @@
 #include "ofxAnimationPrimitives.h"
 #include "Ground.hpp"
 #include "VoltageIndicator.hpp"
+#include "DataMatrix.hpp"
 
 
-class Scene01 : public BaseSceneInterfase
+class SceneB : public BaseSceneInterfase
 {
-    
-    deque<string> mDataList;
 
     BaseContentsController mHead;
     BaseContentsController mBody;
@@ -26,13 +25,14 @@ public:
         timeline.addColors("bgcolor");
         timeline.addColors("datacolor");
         
-        ofAddListener(timeline.events().bangFired, this, &Scene01::getFlag);
+        ofAddListener(timeline.events().bangFired, this, &SceneB::getFlag);
         
         //----------
         // setup contents
         //----------
-        mHead.createInstance<VoltageIndicator>();
+        mHead.createInstance<VoltageIndicator>()->play();
         mBody.createInstance<Ground>();
+        mBody.createInstance<DataMatrix>()->play();
         
         ofFbo::Settings s1;
         s1.width  = plant::edgeW;
@@ -50,17 +50,12 @@ public:
         s2.internalformat = GL_RGBA;
         mBody.setFboAllocate(s2);
         
-        mHead.playAll();
-        mBody.playAll();
+//        mHead.playAll();
+//        mBody.playAll();
     }
     
     void update()
     {
-        if (mDataList.size() > 36) {
-            mDataList.pop_front();
-        }
-        
-        
         mHead.update();
         mBody.update();
     }
@@ -74,45 +69,19 @@ public:
         
         mHead.draw(plant::edgeX, plant::edgeY, plant::edgeW, plant::edgeH);
         mBody.draw(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
-
-        drawDataList();
-        drawCircleGraph();
         
         ofPopStyle();
     }
     
     void getFlag(ofxTLBangEventArgs & args)
     {
-//        if (args.flag == "start") {
-//            mDataset->get()->play();
-//        }
-//        if (args.flag == "stop") {
-//            mDataset->get()->stop();
-//        }
     }
     
     void keyPressed( int key )
     {
-        mHead.sendMessage(0, key);
-    }
-
-    
-    void drawDataList()
-    {
-        ofSetColor(0, 255, 0);
-        
-        int x = plant::bodyXW * 0.2;
-        int y = plant::bodyY + 10;
-        for (int i = 0; i < mDataList.size(); i++) {
-            ofDrawBitmapString(mDataList[i], x, y + (i * 16));
-        }
+        mHead.sendMessageAll(key);
+        mBody.sendMessageAll(key);
     }
     
-    void drawCircleGraph()
-    {
-        
-    }
-    
-
         
 };

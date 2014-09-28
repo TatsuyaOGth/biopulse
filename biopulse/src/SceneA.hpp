@@ -4,7 +4,7 @@
 #include "DataLebel.hpp"
 #include "Ocsillators.hpp"
 
-class Scene02 : public BaseSceneInterfase
+class SceneA : public BaseSceneInterfase
 {
     BaseContentsController mHead;
     BaseContentsController mBody;

@@ -1,6 +1,7 @@
 #include "ofApp.h"
-#include "Scene01.hpp"
-#include "Scene02.hpp"
+#include "SceneA.hpp"
+#include "SceneB.hpp"
+
 
 #define FOR_SCENES for (vector<scenePtr>::iterator it = mScenes.begin(); it != mScenes.end(); it++)
 #define CURRENT_SCENE mScenes[mNumCurrentScene]
@@ -25,8 +26,8 @@ void ofApp::setup(){
     //----------
     // create scenes
     //----------
-    mScenes.push_back(scenePtr(new Scene01()));
-    mScenes.push_back(scenePtr(new Scene02()));
+    mScenes.push_back(scenePtr(new SceneA()));
+    mScenes.push_back(scenePtr(new SceneB()));
     
     mNumCurrentScene = 0;
     FOR_SCENES {
@@ -41,7 +42,7 @@ void ofApp::setup(){
     // init values
     //-----------
     mMode = 0;
-    share::font.loadFont("EHSMB.TTF", 12);
+    share::font.loadFont("pf_arma_five.ttf", 11);
 }
 
 //--------------------------------------------------------------

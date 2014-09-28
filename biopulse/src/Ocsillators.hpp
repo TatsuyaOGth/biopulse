@@ -79,14 +79,21 @@ public:
         }
         
         if (msg == '2') {
-            while (true) {
-                int i = ofRandom(mAssignQue.size());
+            bool b = false;
+            for (int i = 0; i < mAssignQue.size(); i++) {
                 if (!mAssignQue[i]) {
-                    mAssignQue[i] = true;
-                    break;
+                    while (true) {
+                        int i = ofRandom(mAssignQue.size());
+                        if (!mAssignQue[i]) {
+                            mAssignQue[i] = true;
+                            goto OUT;
+                        }
+                    }
                 }
             }
         }
+    OUT:
+        int i;
     }
     
 };

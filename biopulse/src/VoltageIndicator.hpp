@@ -55,14 +55,22 @@ class VoltageIndicator : public BaseContentsInterface
     
     ofxAnimationPrimitives::InstanceManager mScanLines;
     
+    deque<float> mWave;
+    
 public:
     
     VoltageIndicator()
     {
+        for (int i = 0; i < data::bufferLength; i++) {
+            mWave.push_back(DATASET[0]->getNextData()->voltage);
+        }
     }
     
     void update()
     {
+        mWave.push_back(DATASET[0]->getNextData()->voltage);
+        if (mWave.size() > data::bufferLength) mWave.pop_front();
+        
         mScanLines.update();
     }
     
@@ -85,6 +93,8 @@ public:
                                                           )->playInfinity();
         if (msg == 2) mScanLines.release<ScanLine>();
     }
+    
+    
     
     void drawGraphLine()
     {
@@ -128,7 +138,7 @@ public:
     {
         ofSetColor(255, 255, 255);
 //        float l = 25;
-//        float x1 = plant::edgeRect.getMaxX();
+//        float x1 = getWidth();
 //        float y1 = plant::edgeRect.getCenter().y + mDataset->get()->getVoltageOnStartPoint() - 10;
 //        float x2 = plant::edgeRect.getMaxX() - l;
 //        float y2 = plant::edgeRect.getCenter().y + mDataset->get()->getVoltageOnStartPoint();
@@ -137,9 +147,22 @@ public:
 //        ofTriangle(x1, y1, x2, y2, x3, y3);
         
 //        ofSetColor(0, 255, 0);
-        ofNoFill();
+//        ofNoFill();
 //        mDataset->get()->draw(0, 0, getWidth() - l, getHeight());
         
+        ofMesh mesh;
+        mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
+        int l = mWave.size() - 1;
+        for (int j = 0; j < mWave.size(); j++, l--) {
+            int k = ofMap(j, 0, data::bufferLength, getWidth(), 0);
+            mesh.addColor(ofColor(0, 255, 0));
+            mesh.addVertex(ofVec3f(k, mWave[l] * getHeight(), 0));
+        }
+        ofPushMatrix();
+        ofTranslate(0, getHeight() * 0.5);
+        mesh.draw();
+        ofPopMatrix();
+
     }
     
 
