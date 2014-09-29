@@ -81,6 +81,14 @@ public:
         if (mPointer >= data.size()) mPointer = 0; // loop
         return data[mPointer];
     }
+    Data * getTargetData(int n)
+    {
+        int t = n + mPointer;
+        if (data.empty()) return NULL;
+        if (t < 0) return NULL;
+        if (t >= data.size()) t = 0; // loop
+        return data[t];
+    }
     Data * getData(int i)
     {
         mPointer = i;

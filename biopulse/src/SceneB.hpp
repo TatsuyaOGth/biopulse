@@ -7,6 +7,9 @@
 #include "VoltageIndicator.hpp"
 #include "DataMatrix.hpp"
 #include "Radar.hpp"
+#include "GenerativeObject.hpp"
+#include "Radiation.hpp"
+#include "PatternExample.hpp"
 
 
 class SceneB : public BaseSceneInterfase
@@ -34,7 +37,10 @@ public:
         mHead.createInstance<VoltageIndicator>()->play();
         mBody.createInstance<Ground>();
         mBody.createInstance<DataMatrix>()->play();
-//        mBody.createInstance<Radar>()->play();
+        mBody.createInstance<Radar>()->play();
+        mBody.createInstance<GenerativeObject>();
+        mBody.createInstance<Radiation>()->play();
+        mBody.createInstance<PatternExample>()->play();
         
         ofFbo::Settings s1;
         s1.width  = plant::edgeW;

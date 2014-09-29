@@ -1,6 +1,7 @@
 #include "ofApp.h"
 #include "SceneA.hpp"
 #include "SceneB.hpp"
+#include "SceneC.hpp"
 
 
 #define FOR_SCENES for (vector<scenePtr>::iterator it = mScenes.begin(); it != mScenes.end(); it++)
@@ -28,6 +29,7 @@ void ofApp::setup(){
     //----------
     mScenes.push_back(scenePtr(new SceneA()));
     mScenes.push_back(scenePtr(new SceneB()));
+    mScenes.push_back(scenePtr(new SceneC()));
     
     mNumCurrentScene = 0;
     FOR_SCENES {

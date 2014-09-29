@@ -4,7 +4,9 @@
 
 namespace rs
 {
-    static ofQTKitPlayer radar;
+    static ofVideoPlayer radar;
+    static vector<ofTexture> inks;
+    
 }
 
 
@@ -39,6 +41,8 @@ protected:
     
     float getWidth()  { return mFbo.getWidth();  }
     float getHeight() { return mFbo.getHeight(); }
+#define WIDTH getWidth()
+#define HEIGHT getHeight()
     
 public:
     

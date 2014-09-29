@@ -312,6 +312,7 @@
 		8FCE85CD7CE653733B1C4438 /* b2EdgeAndCircleContact.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2EdgeAndCircleContact.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h; sourceTree = SOURCE_ROOT; };
 		911A090419CAF06600C03816 /* SceneB.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneB.hpp; sourceTree = "<group>"; };
 		9122D0B019D728CD00E7F84C /* DataMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataMatrix.hpp; sourceTree = "<group>"; };
+		914AFB6319D9637F00E433C1 /* ActioinDrawFrames.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActioinDrawFrames.hpp; sourceTree = "<group>"; };
 		9167419019D3D0B700D79D89 /* Ocsillators.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ocsillators.hpp; sourceTree = "<group>"; };
 		919225E419CC4E3A000720A9 /* ofxEasingCam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingCam.cpp; sourceTree = "<group>"; };
 		919225E519CC4E3A000720A9 /* ofxEasingCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingCam.h; sourceTree = "<group>"; };
@@ -322,6 +323,13 @@
 		91D1406919CDF45400896CCC /* DataController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DataController.hpp; sourceTree = "<group>"; };
 		91D1406A19CDF57800896CCC /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		91D40FB019D7F2C7002CEB53 /* Radar.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Radar.hpp; sourceTree = "<group>"; };
+		91D40FB219D7F72B002CEB53 /* GenerativeObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GenerativeObject.hpp; sourceTree = "<group>"; };
+		91D40FB719D7FE8D002CEB53 /* PatternExample.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PatternExample.hpp; sourceTree = "<group>"; };
+		91D40FB819D80517002CEB53 /* Radiation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Radiation.hpp; sourceTree = "<group>"; };
+		91D40FBB19D825F4002CEB53 /* SceneC.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SceneC.hpp; sourceTree = "<group>"; };
+		91D40FBC19D826DA002CEB53 /* ActionDrawing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActionDrawing.hpp; sourceTree = "<group>"; };
+		91D40FC019D83CBA002CEB53 /* EmittingObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EmittingObject.hpp; sourceTree = "<group>"; };
+		91D40FC519D83E56002CEB53 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = bin/data/shaders; sourceTree = "<group>"; };
 		91D90E2319CB6BFA0094C201 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
 		91D90E2419CB6BFA0094C201 /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
 		91D90E2619CB6BFA0094C201 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
@@ -871,6 +879,7 @@
 				91D1406719CDF40500896CCC /* BaseSceneInterface.hpp */,
 				919225F119CC5DF0000720A9 /* SceneA.hpp */,
 				911A090419CAF06600C03816 /* SceneB.hpp */,
+				91D40FBB19D825F4002CEB53 /* SceneC.hpp */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -885,6 +894,12 @@
 				91F949E219D5E78A00A2D34E /* VoltageIndicator.hpp */,
 				9122D0B019D728CD00E7F84C /* DataMatrix.hpp */,
 				91D40FB019D7F2C7002CEB53 /* Radar.hpp */,
+				91D40FB219D7F72B002CEB53 /* GenerativeObject.hpp */,
+				91D40FB819D80517002CEB53 /* Radiation.hpp */,
+				91D40FB719D7FE8D002CEB53 /* PatternExample.hpp */,
+				91D40FBC19D826DA002CEB53 /* ActionDrawing.hpp */,
+				914AFB6319D9637F00E433C1 /* ActioinDrawFrames.hpp */,
+				91D40FC019D83CBA002CEB53 /* EmittingObject.hpp */,
 			);
 			name = Contents;
 			sourceTree = "<group>";
@@ -1512,6 +1527,7 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				91D40FC519D83E56002CEB53 /* shaders */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
