@@ -17,6 +17,9 @@ class BaseContentsInterface
     friend class BaseContentsController;
     
     ofFbo mFbo;
+    ofColor mBGColor;
+    ofColor mFGColor;
+    ofBlendMode mBlendMode;
     
     inline void rendering()
     {
@@ -25,9 +28,9 @@ class BaseContentsInterface
             ofPushMatrix();
             ofPushStyle();
             mFbo.begin();
-            ofBackground(0, 0, 0, 0);
-            ofSetColor(255, 255, 255, 255);
-            draw();
+            ofBackground(mBGColor);
+            ofSetColor(255,255,255,255);
+            this->draw();
             mFbo.end();
             ofPopStyle();
             ofPopMatrix();
@@ -46,7 +49,12 @@ protected:
     
 public:
     
-    BaseContentsInterface(): bPlay(false) {}
+    BaseContentsInterface():
+    bPlay(false),
+    mBGColor(ofColor(0,0,0,0)),
+    mFGColor(ofColor(255,255,255,255)),
+    mBlendMode(OF_BLENDMODE_ALPHA)
+    {}
     virtual ~BaseContentsInterface() {}
     
     virtual void update() {}
@@ -54,10 +62,16 @@ public:
     virtual void gotMessage(int msg) {}
     
     inline void setupFbo(ofFbo::Settings settings) { mFbo.allocate(settings); }
+    inline void setBackgroundColor(ofColor col) { mBGColor.set(col); }
+    inline void setForegroundColor(ofColor col) { mFGColor.set(col); }
+    inline void setBlendMode(ofBlendMode mode) { mBlendMode = mode; }
+    
     inline void draw(int x, int y)
     {
         if (mFbo.isAllocated()) {
             rendering();
+            ofEnableBlendMode(mBlendMode);
+            ofSetColor(mFGColor);
             mFbo.draw(x, y);
         } else draw();
     }
@@ -65,6 +79,8 @@ public:
     {
         if (mFbo.isAllocated()) {
             rendering();
+            ofEnableBlendMode(mBlendMode);
+            ofSetColor(mFGColor);
             mFbo.draw(x, y, w, h);
         } else draw();
     }
@@ -112,13 +128,13 @@ public:
     
     void draw(int x, int y, int w, int h)
     {
-        glPushAttrib(GL_ALL_ATTRIB_BITS);
-        ofPushMatrix();
-        ofPushStyle();
+//        glPushAttrib(GL_ALL_ATTRIB_BITS);
+//        ofPushMatrix();
+//        ofPushStyle();
         drawInstance(x, y, w, h);
-        ofPopStyle();
-        ofPopMatrix();
-        glPopAttrib();
+//        ofPopStyle();
+//        ofPopMatrix();
+//        glPopAttrib();
     }
     
     void drawInstance(int x, int y, int w, int h)
@@ -142,6 +158,12 @@ public:
     {
         if (isOver(n)) return;
         instances[n]->stop();
+    }
+    
+    void togglePlay(int n)
+    {
+        if (isOver(n)) return;
+        instances[n]->isPlay() ? instances[n]->stop() : instances[n]->play();
     }
     
     bool isPlay(int n)
@@ -196,6 +218,39 @@ public:
         {
             BaseContentsInterface *o = *it;
             o->setupFbo(settings);
+            it++;
+        }
+    }
+    
+    void setBackgroundColor(ofColor col)
+    {
+        vector<BaseContentsInterface *>::iterator it = instances.begin();
+        while (it != instances.end())
+        {
+            BaseContentsInterface *o = *it;
+            o->setBackgroundColor(col);
+            it++;
+        }
+    }
+    
+    void setForegroundColor(ofColor col)
+    {
+        vector<BaseContentsInterface *>::iterator it = instances.begin();
+        while (it != instances.end())
+        {
+            BaseContentsInterface *o = *it;
+            o->setForegroundColor(col);
+            it++;
+        }
+    }
+    
+    void setBlendMode(ofBlendMode mode)
+    {
+        vector<BaseContentsInterface *>::iterator it = instances.begin();
+        while (it != instances.end())
+        {
+            BaseContentsInterface *o = *it;
+            o->setBlendMode(mode);
             it++;
         }
     }

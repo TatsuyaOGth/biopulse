@@ -22,25 +22,18 @@ public:
     
     void setup()
     {
-        timeline.setDurationInSeconds(30);
-        timeline.addFlags("flag");
-        timeline.addCurves("speed", ofRange(0.1, 3));
-        timeline.addCurves("gain", ofRange(100, 1000));
-        timeline.addColors("bgcolor");
-        timeline.addColors("datacolor");
-        
-        ofAddListener(timeline.events().bangFired, this, &SceneB::getFlag);
-        
         //----------
         // setup contents
         //----------
         mHead.createInstance<VoltageIndicator>()->play();
-        mBody.createInstance<Ground>();
+        mBody.createInstance<Ground>()->play();
         mBody.createInstance<DataMatrix>()->play();
         mBody.createInstance<Radar>()->play();
         mBody.createInstance<GenerativeObject>();
         mBody.createInstance<Radiation>()->play();
-        mBody.createInstance<PatternExample>()->play();
+        mBody.createInstance<PatternExample>();
+        
+        mBody.setBlendMode(OF_BLENDMODE_ADD);
         
         ofFbo::Settings s1;
         s1.width  = plant::edgeW;
@@ -60,6 +53,16 @@ public:
         
 //        mHead.playAll();
 //        mBody.playAll();
+        
+        //----------
+        // setup timeline
+        //----------
+        timeline.setDurationInSeconds(90);
+        timeline.addFlags("flag");
+        timeline.addCurves("bgbri", ofRange(0, 255));
+        timeline.addColors("datacolor");
+        
+        ofAddListener(timeline.events().bangFired, this, &SceneB::getFlag);
     }
     
     void update()
@@ -70,15 +73,16 @@ public:
     
     void draw()
     {
+        unsigned char g = timeline.getValue("bgbri");
+        mHead.setBackgroundColor(ofColor(g,g,g,g));
+        mBody.setBackgroundColor(ofColor(g,g,g,g));
+        
         ofPushStyle();
-        ofDisableAntiAliasing();
-        
-        ofBackground(timeline.getColor("bgcolor"));
-        
+        ofEnableAlphaBlending();
         mHead.draw(plant::edgeX, plant::edgeY, plant::edgeW, plant::edgeH);
         mBody.draw(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
-        
         ofPopStyle();
+        
     }
     
     void getFlag(ofxTLBangEventArgs & args)
@@ -87,6 +91,11 @@ public:
     
     void keyPressed( int key )
     {
+        if (key == 'q') mBody.togglePlay(0);
+        if (key == 'w') mBody.togglePlay(1);
+        if (key == 'e') mBody.togglePlay(2);
+        if (key == 'r') mBody.togglePlay(4);
+        
         mHead.sendMessageAll(key);
         mBody.sendMessageAll(key);
     }

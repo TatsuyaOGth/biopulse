@@ -14,7 +14,7 @@ public:
     
     Radiation()
     {
-        radius = 1200;
+        radius = 800;
         startAngle = 0;
         stopAngle = 0;
         mSpeed = 1;
@@ -39,7 +39,6 @@ public:
         ofTranslate(getWidth() * 0.5, getHeight() * 0.5);
         
         ofVboMesh mesh;
-//        mesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
 
 //        mesh.addColor(ofColor(255));
 //        mesh.addVertex(ofVec3f(0));

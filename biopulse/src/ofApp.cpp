@@ -79,7 +79,7 @@ void ofApp::draw(){
         s << "fps: " << ofGetFrameRate() << endl;
         s << "width:  " << ofGetWidth() << endl;
         s << "height: " << ofGetHeight() << endl;
-        ofDrawBitmapString(s.str(), 20, 20);
+        ofDrawBitmapStringHighlight(s.str(), 20, 20);
     }
 }
 

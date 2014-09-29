@@ -64,6 +64,7 @@
 		8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */; };
 		9102D0609CDD0B902F138C68 /* ofxDelaunay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBE3E908E4BB3468853C50ED /* ofxDelaunay.cpp */; };
 		9119BFC53670A98106E367BB /* ofxMSATimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4EBE6922DE4DCB97639B65F /* ofxMSATimer.cpp */; };
+		914AFB9319D98A6000E433C1 /* ofxPostGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 914AFB9019D98A6000E433C1 /* ofxPostGlitch.cpp */; };
 		919225EB19CC4E3A000720A9 /* ofxEasingCam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 919225E419CC4E3A000720A9 /* ofxEasingCam.cpp */; };
 		91AE56F719CFB38700028DC7 /* ofxEasingQuart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882494DB324414B7B31DB11C /* ofxEasingQuart.cpp */; };
 		91D90EB319CB6BFB0094C201 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 91D90E2719CB6BFA0094C201 /* kiss_fft.c */; };
@@ -313,6 +314,9 @@
 		911A090419CAF06600C03816 /* SceneB.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneB.hpp; sourceTree = "<group>"; };
 		9122D0B019D728CD00E7F84C /* DataMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataMatrix.hpp; sourceTree = "<group>"; };
 		914AFB6319D9637F00E433C1 /* ActioinDrawFrames.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActioinDrawFrames.hpp; sourceTree = "<group>"; };
+		914AFB9019D98A6000E433C1 /* ofxPostGlitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPostGlitch.cpp; sourceTree = "<group>"; };
+		914AFB9119D98A6000E433C1 /* ofxPostGlitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPostGlitch.h; sourceTree = "<group>"; };
+		914AFB9419D98AC600E433C1 /* myShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = myShaders; path = bin/data/myShaders; sourceTree = "<group>"; };
 		9167419019D3D0B700D79D89 /* Ocsillators.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ocsillators.hpp; sourceTree = "<group>"; };
 		919225E419CC4E3A000720A9 /* ofxEasingCam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingCam.cpp; sourceTree = "<group>"; };
 		919225E519CC4E3A000720A9 /* ofxEasingCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingCam.h; sourceTree = "<group>"; };
@@ -329,7 +333,6 @@
 		91D40FBB19D825F4002CEB53 /* SceneC.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SceneC.hpp; sourceTree = "<group>"; };
 		91D40FBC19D826DA002CEB53 /* ActionDrawing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActionDrawing.hpp; sourceTree = "<group>"; };
 		91D40FC019D83CBA002CEB53 /* EmittingObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EmittingObject.hpp; sourceTree = "<group>"; };
-		91D40FC519D83E56002CEB53 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = bin/data/shaders; sourceTree = "<group>"; };
 		91D90E2319CB6BFA0094C201 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
 		91D90E2419CB6BFA0094C201 /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
 		91D90E2619CB6BFA0094C201 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
@@ -853,6 +856,24 @@
 				ABE37A0BB21B3D890EFC285B /* src */,
 			);
 			name = ofxTimecode;
+			sourceTree = "<group>";
+		};
+		914AFB6919D98A6000E433C1 /* ofxPostGlitch */ = {
+			isa = PBXGroup;
+			children = (
+				914AFB8F19D98A6000E433C1 /* src */,
+			);
+			name = ofxPostGlitch;
+			path = ../../../addons/ofxPostGlitch;
+			sourceTree = "<group>";
+		};
+		914AFB8F19D98A6000E433C1 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				914AFB9019D98A6000E433C1 /* ofxPostGlitch.cpp */,
+				914AFB9119D98A6000E433C1 /* ofxPostGlitch.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		919225CD19CC4E3A000720A9 /* ofxEasingCam */ = {
@@ -1405,6 +1426,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				914AFB6919D98A6000E433C1 /* ofxPostGlitch */,
 				919225CD19CC4E3A000720A9 /* ofxEasingCam */,
 				91D90EFA19CB6C170094C201 /* ofxXmlSettings */,
 				91D90CCE19CB6BF90094C201 /* ofxTimeline */,
@@ -1527,7 +1549,7 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
-				91D40FC519D83E56002CEB53 /* shaders */,
+				914AFB9419D98AC600E433C1 /* myShaders */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
@@ -1748,6 +1770,7 @@
 				4A148DA231762B6E6A85CE1A /* Timer.cpp in Sources */,
 				B16C89D9CA996CA8FD860D81 /* ofxBox2d.cpp in Sources */,
 				F2FF2F9D6699B4B328CB6BE3 /* ofxBox2dBaseShape.cpp in Sources */,
+				914AFB9319D98A6000E433C1 /* ofxPostGlitch.cpp in Sources */,
 				AE9254BC31C3409899D28DC9 /* ofxBox2dCircle.cpp in Sources */,
 				4D09B9611BCF4603581DFEE4 /* ofxBox2dEdge.cpp in Sources */,
 				91D90EC319CB6BFB0094C201 /* ofxTimeline.cpp in Sources */,
@@ -1944,6 +1967,7 @@
 					"\"$(SRCROOT)/../../../addons/ofxXmlSettings/libs\"",
 					"\"$(SRCROOT)/../../../addons/ofxXmlSettings/src\"",
 					"\"$(SRCROOT)/../../../addons/ofxEasingCam/src\"",
+					../../../addons/ofxPostGlitch/src,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -2036,6 +2060,7 @@
 					"\"$(SRCROOT)/../../../addons/ofxXmlSettings/libs\"",
 					"\"$(SRCROOT)/../../../addons/ofxXmlSettings/src\"",
 					"\"$(SRCROOT)/../../../addons/ofxEasingCam/src\"",
+					../../../addons/ofxPostGlitch/src,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (

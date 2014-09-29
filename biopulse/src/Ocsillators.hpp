@@ -47,9 +47,7 @@ public:
     
     void draw()
     {
-        ofBackground(255, 255, 255);
         if (mode == 0) return;
-        
        
         for (int i = 0; i < mWaves.size(); i++) {
             ofMesh mesh;

@@ -1,0 +1,12 @@
+<keyframes>
+    <key>
+        <flag>drawstart</flag>
+        <time>00:00:00:000</time>
+        <value>0.600000024</value>
+    </key>
+    <key>
+        <flag>drawstop</flag>
+        <time>00:00:08:062</time>
+        <value>0.149999976</value>
+    </key>
+</keyframes>

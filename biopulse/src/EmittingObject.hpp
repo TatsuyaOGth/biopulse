@@ -13,7 +13,7 @@ class EmittingObject : public BaseContentsInterface
 public:
     EmittingObject()
     {
-        ASSERT(mShader.load("shaders/empty.vert", "shaders/emit.frag"));
+        ASSERT(mShader.load("myShaders/empty.vert", "myShaders/emit.frag"));
         mSize = 80;
     }
     

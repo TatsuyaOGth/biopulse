@@ -11,20 +11,20 @@ class SceneC : public BaseSceneInterfase
     BaseContentsController mPlant;
     BaseContentsController mBody;
     
+    EmittingObject * mEO;
+    ActionDrawFrames * mADF;
     
 public:
     
     void setup()
     {
-        timeline.setDurationInSeconds(30);
-        
-        ofAddListener(timeline.events().bangFired, this, &SceneC::getFlag);
         
         //----------
         // setup contents
         //----------
-        mPlant.createInstance<EmittingObject>()->play();
-        mPlant.createInstance<ActionDrawFrames>()->play();
+        mEO  = mPlant.createInstance<EmittingObject>();
+        mADF = mPlant.createInstance<ActionDrawFrames>();
+        mPlant.playAll();
         
         ofFbo::Settings s1;
         s1.width  = plant::width;
@@ -42,6 +42,17 @@ public:
         s2.internalformat = GL_RGBA;
         mBody.setFboAllocate(s2);
         
+        //----------
+        // setup timeline
+        //----------
+        timeline.setDurationInSeconds(30);
+        timeline.addFlags("flag");
+        timeline.addCurves("bgbri", ofRange(0, 255));
+        timeline.addCurves("fgbri", ofRange(0, 255));
+
+        
+        ofAddListener(timeline.events().bangFired, this, &SceneC::getFlag);
+
     }
     
     void update()
@@ -52,17 +63,25 @@ public:
     
     void draw()
     {
-        ofPushStyle();
-        ofDisableAntiAliasing();
+        unsigned char g = timeline.getValue("bgbri");
+        mPlant.setBackgroundColor(ofColor(g,g,g,g));
+                      g = timeline.getValue("fgbri");
+        mPlant.setForegroundColor(ofColor(g,g,g,g));
         
         mPlant.draw(0, 0, plant::width, plant::width);
         mBody.draw(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
         
-        ofPopStyle();
     }
     
     void getFlag(ofxTLBangEventArgs & args)
     {
+        if (args.flag == "drawstart") {
+            mADF->setDraw(true);
+            mADF->reset();
+        }
+        if (args.flag == "drawstop") {
+            mADF->setDraw(false);
+        }
     }
     
     void keyPressed( int key )

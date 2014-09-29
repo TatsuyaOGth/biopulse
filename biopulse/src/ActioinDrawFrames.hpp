@@ -75,7 +75,7 @@ public:
         }
         
         reset();
-        bDraw = true;
+        bDraw = false;
     }
     
     void update()
@@ -115,6 +115,11 @@ public:
     void reset()
     {
         mScale = 0.1;
-        mExp = 0.005;
+        mExp = 0.01;
+    }
+    
+    void setDraw(bool b)
+    {
+        bDraw = b;
     }
 };

@@ -39,6 +39,15 @@ public:
         
         mHead.playAll();
         mBody.playAll();
+        
+        //----------
+        // setup timeline
+        //----------
+        timeline.setDurationInSeconds(60);
+        timeline.addFlags("flag");
+        timeline.addCurves("bgbri", ofRange(0, 255));
+        
+        ofAddListener(timeline.events().bangFired, this, &SceneA::getFlag);
     }
     
     void update()
@@ -49,6 +58,10 @@ public:
     
     void draw()
     {
+        unsigned char g = timeline.getValue("bgbri");
+        mHead.setBackgroundColor(ofColor(g,g,g,g));
+        mBody.setBackgroundColor(ofColor(g,g,g,g));
+        
         mHead.draw(plant::edgeX, plant::edgeY, plant::edgeW, plant::edgeH);
         mBody.draw(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
     }
@@ -57,5 +70,9 @@ public:
     {
         mHead.sendMessageAll(key);
         mBody.sendMessageAll(key);
+    }
+    
+    void getFlag(ofxTLBangEventArgs & args)
+    {
     }
 };

@@ -64,7 +64,6 @@ public:
     
     void draw()
     {
-        ofBackground(255, 255, 255);
         if (mode == 0) return;
         
         int size = data::bufferLength * 0.5;
