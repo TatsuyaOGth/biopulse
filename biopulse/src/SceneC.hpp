@@ -22,9 +22,10 @@ public:
         //----------
         // setup contents
         //----------
-        mEO  = mPlant.createInstance<EmittingObject>();
         mADF = mPlant.createInstance<ActionDrawFrames>();
-        mPlant.playAll();
+        mEO  = mPlant.createInstance<EmittingObject>();
+        mADF->play();
+        mPlant.setBlendMode(OF_BLENDMODE_ADD);
         
         ofFbo::Settings s1;
         s1.width  = plant::width;
@@ -49,7 +50,9 @@ public:
         timeline.addFlags("flag");
         timeline.addCurves("bgbri", ofRange(0, 255));
         timeline.addCurves("fgbri", ofRange(0, 255));
-
+        timeline.addCurves("emsize", ofRange(0, 140));
+        timeline.addCurves("acscale", ofRange(0, 2));
+        
         
         ofAddListener(timeline.events().bangFired, this, &SceneC::getFlag);
 
@@ -57,6 +60,9 @@ public:
     
     void update()
     {
+        mEO->setSize(timeline.getValue("emsize"));
+        mADF->setScale(timeline.getValue("acscale"));
+        
         mPlant.update();
         mBody.update();
     }
@@ -77,10 +83,18 @@ public:
     {
         if (args.flag == "drawstart") {
             mADF->setDraw(true);
-            mADF->reset();
         }
         if (args.flag == "drawstop") {
             mADF->setDraw(false);
+        }
+        if (args.flag == "edge") {
+            mADF->setEdge(true);
+        }
+        if (args.flag == "edgeoff") {
+            mADF->setEdge(false);
+        }
+        if (args.flag == "emittplay") {
+            mEO->play();
         }
     }
     

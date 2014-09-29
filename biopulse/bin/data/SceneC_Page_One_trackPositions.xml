@@ -1,7 +1,19 @@
 <positions>
+    <element name="acscale">
+        <x>0.000000000</x>
+        <y>308.000000000</y>
+        <width>800.000000000</width>
+        <height>40.000000000</height>
+    </element>
     <element name="bgbri">
         <x>0.000000000</x>
         <y>116.000000000</y>
+        <width>800.000000000</width>
+        <height>40.000000000</height>
+    </element>
+    <element name="emsize">
+        <x>0.000000000</x>
+        <y>244.000000000</y>
         <width>800.000000000</width>
         <height>40.000000000</height>
     </element>

@@ -17,6 +17,10 @@ class BaseContentsInterface
     friend class BaseContentsController;
     
     ofFbo mFbo;
+    
+protected:
+    
+    typedef BaseContentsInterface base;
     ofColor mBGColor;
     ofColor mFGColor;
     ofBlendMode mBlendMode;
@@ -128,13 +132,13 @@ public:
     
     void draw(int x, int y, int w, int h)
     {
-//        glPushAttrib(GL_ALL_ATTRIB_BITS);
-//        ofPushMatrix();
-//        ofPushStyle();
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        ofPushMatrix();
+        ofPushStyle();
         drawInstance(x, y, w, h);
-//        ofPopStyle();
-//        ofPopMatrix();
-//        glPopAttrib();
+        ofPopStyle();
+        ofPopMatrix();
+        glPopAttrib();
     }
     
     void drawInstance(int x, int y, int w, int h)

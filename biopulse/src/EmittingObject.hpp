@@ -19,12 +19,11 @@ public:
     
     void update()
     {
-        mSize = abs(sin(share::elapsedTimef) * 20) + 80;
+        mSize += sin(share::elapsedTimef) * 20;
     }
     
     void draw()
     {
-        ofBackground(0, 0, 0, 0);
         ofSetColor(255, 255, 255, 255);
         ofFill();
         
@@ -51,5 +50,10 @@ public:
         glVertex2f(ofGetWidth(), ofGetHeight());
         glEnd();
         mShader.end();
+    }
+    
+    void setSize(float size)
+    {
+        mSize = size;
     }
 };

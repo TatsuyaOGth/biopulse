@@ -5,8 +5,23 @@
         <value>0.600000024</value>
     </key>
     <key>
-        <flag>drawstop</flag>
+        <flag>edgeoff</flag>
+        <time>00:00:00:001</time>
+        <value>0.600000024</value>
+    </key>
+    <key>
+        <flag>edge</flag>
         <time>00:00:08:062</time>
+        <value>0.458490610</value>
+    </key>
+    <key>
+        <flag>drawstop</flag>
+        <time>00:00:08:063</time>
         <value>0.149999976</value>
+    </key>
+    <key>
+        <flag>emittplay</flag>
+        <time>00:00:08:064</time>
+        <value>0.730082154</value>
     </key>
 </keyframes>

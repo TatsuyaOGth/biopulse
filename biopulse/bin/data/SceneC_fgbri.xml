@@ -6,9 +6,15 @@
         <value>1.000000000</value>
     </key>
     <key>
+        <easefunc>0</easefunc>
+        <easetype>0</easetype>
+        <time>00:00:08:061</time>
+        <value>1.000000000</value>
+    </key>
+    <key>
         <easefunc>4</easefunc>
         <easetype>2</easetype>
-        <time>00:00:24:825</time>
+        <time>00:00:23:438</time>
         <value>1.000000000</value>
     </key>
     <key>

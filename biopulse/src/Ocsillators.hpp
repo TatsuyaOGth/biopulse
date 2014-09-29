@@ -8,6 +8,7 @@ class Ocsillators : public BaseContentsInterface
     vector<deque<float> > mWaves;
     vector<bool> mAssignQue;
     ofColor mCol;
+    float mGain;
     
     int mode;
     
@@ -19,6 +20,7 @@ public:
         mAssignQue.resize(mWaves.size(), false);
         mCol.set(255, 255, 255); //tmp
         mode = 0;
+        mGain = 200;
     }
     
     void update()
@@ -48,19 +50,20 @@ public:
     void draw()
     {
         if (mode == 0) return;
+        float baseGain = getHeight() / (float)DATASET.size();
        
         for (int i = 0; i < mWaves.size(); i++) {
             ofMesh mesh;
-            mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
             int l = mWaves[i].size() - 1;
             for (int j = 0; j < mWaves[i].size(); j++, l--) {
                 int k = ofMap(j, 0, data::bufferLength, getWidth(), 0);
                 mesh.addColor(ofColor(0));
-                mesh.addVertex(ofVec3f(k, mWaves[i][l] * 200, 0));
+                mesh.addVertex(ofVec3f(k, mWaves[i][l] * baseGain, 0));
             }
             ofPushMatrix();
             int offsetY = (getHeight() / (float)mWaves.size()) * 0.5;
             ofTranslate(0, ofMap(i, 0, mWaves.size(), offsetY, getHeight()));
+            mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
             mesh.draw();
             ofPopMatrix();
         }
@@ -92,6 +95,11 @@ public:
         }
     OUT:
         int i;
+    }
+    
+    void setGain(float v)
+    {
+        mGain = v;
     }
     
 };

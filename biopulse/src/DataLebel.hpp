@@ -27,9 +27,7 @@ public:
     
     void update()
     {
-        if (mode == 0) return;
-        
-        
+    
         // add line
         line l;
         l.offsetX = getWidth();
@@ -57,15 +55,13 @@ public:
         for (int i = 0; i < mLines.size(); i++) {
             mLines[i].offsetX -= prog;
         }
-        if (mLines.size() > data::bufferLength * 2) mLines.pop_front();
+        if (mLines.size() > data::bufferLength * 1.5) mLines.pop_front();
         
         mCounter++;
     }
     
     void draw()
     {
-        if (mode == 0) return;
-        
         int size = data::bufferLength * 0.5;
         ofNoFill();
         ofSetColor(0);

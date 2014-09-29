@@ -12,23 +12,28 @@ class ActionDrawFrames : public BaseContentsInterface
         int mUpdateCount;
         float mRot;
         float mScale;
+        const bool * bUpdate;
         vector<ofImage> * mFramesPtr;
         
     public:
-        Frame(int x, int y, float scale, float deg, vector<ofImage> * framesPtr):
+        
+        Frame(int x, int y, float scale, float deg, vector<ofImage> * framesPtr, bool * updateTog):
         mPos(ofVec2f(x, y)),
         mScale(scale),
         mRot(deg),
-        mFramesPtr(framesPtr)
+        mFramesPtr(framesPtr),
+        bUpdate(updateTog)
         {
             mFrameCount = 0;
             mUpdateCount = 0;
         }
         void update()
         {
-            mUpdateCount++;
-            if (mUpdateCount % 3 == 0) {
-                if (mFrameCount < mFramesPtr->size() - 1) mFrameCount++;
+            if (*bUpdate) {
+                mUpdateCount++;
+                if (mUpdateCount % 3 == 0) {
+                    if (mFrameCount < mFramesPtr->size() - 1) mFrameCount++;
+                }
             }
         }
         void draw()
@@ -53,8 +58,11 @@ class ActionDrawFrames : public BaseContentsInterface
     ofxAnimationPrimitives::InstanceManager mFrames;
     vector<vector<ofImage> > mFrameImgs;
     float mScale;
-    float mExp;
     bool bDraw;
+    bool bEdge;
+    ofShader mShader;
+    ofFbo targetBuffer;
+    ofFbo ShadingBuffer;
     
 public:
     
@@ -74,8 +82,13 @@ public:
             mFrameImgs.push_back(mTFrames);
         }
         
-        reset();
+        mScale = 1.0;
         bDraw = false;
+        bEdge = false;
+        ASSERT(mShader.load("myShaders/outline.vert", "myShaders/outline.frag"));
+        
+        targetBuffer.allocate(getWidth(), getHeight());
+        ShadingBuffer.allocate(getWidth(), getHeight());
     }
     
     void update()
@@ -90,36 +103,61 @@ public:
 //            float ry = ofRandom(-100, 100);
 //            x += rx;
 //            y += ry;
-            mScale += mExp;
             
             int i = (int)ofRandom(mFrameImgs.size());
             //        x = debugMouseX(getWidth());
             //        y = debugMouseY(getHeight());
-            mFrames.createInstance<Frame>(x, y, mScale, ofRandom(360), &mFrameImgs[i])->play(8);
+            mFrames.createInstance<Frame>(x, y, mScale, ofRandom(360), &mFrameImgs[i], &bDraw)->play(14);
         }
         mFrames.update();
+        
     }
     
     void draw()
     {
+        
+        targetBuffer.begin();
+        ofBackground(mBGColor);
+        ofSetColor(255, 255, 255, 255);
         mFrames.draw();
+        targetBuffer.end();
+        
+        if (bEdge) {
+            ofFill();
+            mShader.begin();
+            mShader.setUniformTexture("image", targetBuffer, 0);
+            mShader.setUniform1f("th", 0.025);
+            
+            ShadingBuffer.begin();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            ofRect(0, 0, getWidth(), getHeight());
+            ShadingBuffer.end();
+            mShader.end();
+            
+            ShadingBuffer.draw(0, 0);
+        } else {
+            ofSetColor(255, 255, 255, 255);
+            targetBuffer.draw(0 ,0);
+        }
+        
     }
     
     void gotMessage(int msg)
     {
-        if (msg == '0') reset();
-        if (msg == '1') bDraw = !bDraw;
     }
     
-    
-    void reset()
+    void setScale(float scale)
     {
-        mScale = 0.1;
-        mExp = 0.01;
+        mScale = scale;
     }
     
     void setDraw(bool b)
     {
         bDraw = b;
+    }
+    
+    void setEdge(bool b)
+    {
+        bEdge = b;
     }
 };

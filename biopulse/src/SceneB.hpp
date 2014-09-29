@@ -60,7 +60,6 @@ public:
         timeline.setDurationInSeconds(90);
         timeline.addFlags("flag");
         timeline.addCurves("bgbri", ofRange(0, 255));
-        timeline.addColors("datacolor");
         
         ofAddListener(timeline.events().bangFired, this, &SceneB::getFlag);
     }
