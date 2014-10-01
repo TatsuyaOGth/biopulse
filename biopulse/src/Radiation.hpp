@@ -14,7 +14,7 @@ public:
     
     Radiation()
     {
-        radius = 800;
+        radius = 400;
         startAngle = 0;
         stopAngle = 0;
         mSpeed = 1;
@@ -23,7 +23,7 @@ public:
     void update()
     {
         data.clear();
-        for (int i = 0; i < data::bufferLength; i++) {
+        for (int i = startAngle; i < data::bufferLength + startAngle; i++) {
             data.push_back(DATASET[0]->getTargetData(i));
         }
         

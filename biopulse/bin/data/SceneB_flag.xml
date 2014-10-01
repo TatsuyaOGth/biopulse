@@ -1,1 +1,27 @@
-<keyframes />
+<keyframes>
+    <key>
+        <flag>dt</flag>
+        <time>00:00:00:000</time>
+        <value>0.468750000</value>
+    </key>
+    <key>
+        <flag>vl</flag>
+        <time>00:00:00:001</time>
+        <value>0.300000012</value>
+    </key>
+    <key>
+        <flag>rd</flag>
+        <time>00:00:30:036</time>
+        <value>0.460578382</value>
+    </key>
+    <key>
+        <flag>_dt</flag>
+        <time>00:00:30:037</time>
+        <value>0.106747806</value>
+    </key>
+    <key>
+        <flag>r</flag>
+        <time>00:00:30:038</time>
+        <value>0.649086475</value>
+    </key>
+</keyframes>

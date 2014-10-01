@@ -312,6 +312,7 @@
 		8D1FC15F5941283F4A9E70D3 /* b2PrismaticJoint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2PrismaticJoint.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2PrismaticJoint.h; sourceTree = SOURCE_ROOT; };
 		8FCE85CD7CE653733B1C4438 /* b2EdgeAndCircleContact.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2EdgeAndCircleContact.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h; sourceTree = SOURCE_ROOT; };
 		911A090419CAF06600C03816 /* SceneB.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneB.hpp; sourceTree = "<group>"; };
+		911C516719D9E31C00D17666 /* ScanLines.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScanLines.hpp; sourceTree = "<group>"; };
 		9122D0B019D728CD00E7F84C /* DataMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataMatrix.hpp; sourceTree = "<group>"; };
 		914AFB6319D9637F00E433C1 /* ActioinDrawFrames.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActioinDrawFrames.hpp; sourceTree = "<group>"; };
 		914AFB9019D98A6000E433C1 /* ofxPostGlitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPostGlitch.cpp; sourceTree = "<group>"; };
@@ -911,6 +912,7 @@
 				91F949E019D5DB1700A2D34E /* BaseContentsInterface.h */,
 				9167419019D3D0B700D79D89 /* Ocsillators.hpp */,
 				91B7674519D69B6B00DACD9E /* DataLebel.hpp */,
+				911C516719D9E31C00D17666 /* ScanLines.hpp */,
 				91AE56FB19CFB47A00028DC7 /* Ground.hpp */,
 				91F949E219D5E78A00A2D34E /* VoltageIndicator.hpp */,
 				9122D0B019D728CD00E7F84C /* DataMatrix.hpp */,

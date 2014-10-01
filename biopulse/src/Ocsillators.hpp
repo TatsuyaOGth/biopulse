@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BaseContentsInterface.h"
 #include "ofxAnimationPrimitives.h"
 #include "DataController.hpp"
 

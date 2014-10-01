@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BaseContentsInterface.h"
 #include "ofxAnimationPrimitives.h"
 #include "DataController.hpp"
 
@@ -62,7 +63,6 @@ public:
     
     void draw()
     {
-        int size = data::bufferLength * 0.5;
         ofNoFill();
         ofSetColor(0);
         

@@ -94,6 +94,8 @@ public:
     
     inline void play() { bPlay = true; startPlaying(); }
     inline void stop() { bPlay = false; endPlaying(); }
+    inline void play(bool b) { bPlay = b; b ? startPlaying() : endPlaying(); }
+    inline void togglePlay() { bPlay ? stop() : play(); }
     inline bool isPlay() { return bPlay; }
     inline BaseContentsInterface * getThis() { return this; }
 };
@@ -158,6 +160,12 @@ public:
         instances[n]->play();
     }
     
+    void play(int n, bool b)
+    {
+        if (isOver(n)) return;
+        instances[n]->play(b);
+    }
+    
     void stop(int n)
     {
         if (isOver(n)) return;
@@ -167,7 +175,7 @@ public:
     void togglePlay(int n)
     {
         if (isOver(n)) return;
-        instances[n]->isPlay() ? instances[n]->stop() : instances[n]->play();
+        instances[n]->togglePlay();
     }
     
     bool isPlay(int n)

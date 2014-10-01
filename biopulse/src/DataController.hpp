@@ -78,7 +78,7 @@ public:
     {
         if (data.empty()) return NULL;
         if (mPointer < 0) return NULL;
-        if (mPointer >= data.size()) mPointer = 0; // loop
+        if (mPointer > data.size()) mPointer = mPointer - data.size() + 1; // loop
         return data[mPointer];
     }
     Data * getTargetData(int n)
@@ -86,7 +86,7 @@ public:
         int t = n + mPointer;
         if (data.empty()) return NULL;
         if (t < 0) return NULL;
-        if (t >= data.size()) t = 0; // loop
+        if (t > data.size()) t = t - data.size() + 1; // loop
         return data[t];
     }
     Data * getData(int i)
