@@ -1,14 +1,13 @@
 #pragma once
 
 #include "common.h"
+#include "OscSenderController.hpp"
 
 namespace rs
 {
     static ofVideoPlayer radar;
     static vector<ofTexture> inks;
-    
 }
-
 
 class BaseContentsController;
 
@@ -98,6 +97,8 @@ public:
     inline void togglePlay() { bPlay ? stop() : play(); }
     inline bool isPlay() { return bPlay; }
     inline BaseContentsInterface * getThis() { return this; }
+    
+    static OscSenderController smOscSender;
 };
 
 

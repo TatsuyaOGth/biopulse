@@ -5,6 +5,7 @@
 #include "DataController.hpp"
 #include "BaseSceneInterface.hpp"
 #include "ofxExtras.h"
+#include "ofxOsc.h"
 
 class ofApp : public ofBaseApp{
     

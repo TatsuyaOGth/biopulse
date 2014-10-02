@@ -4,6 +4,7 @@
 #include "DataLebel.hpp"
 #include "Ocsillators.hpp"
 #include "ScanLines.hpp"
+#include "VoltageCircle.hpp"
 
 class SceneA : public BaseSceneInterfase
 {
@@ -11,7 +12,10 @@ class SceneA : public BaseSceneInterfase
     BaseContentsController mBody;
     BaseContentsController mPlant;
     
+    DataLabel * mDL;
+    Ocsillators * mOSC;
     ScanLines * mSL;
+    VoltageCircle * mVL;
     
 public:
     
@@ -21,13 +25,14 @@ public:
         //----------
         // setup contents
         //----------
-        mHead.createInstance<DataLabel>();
-        mBody.createInstance<Ocsillators>();
+        mDL = mHead.createInstance<DataLabel>();
+        mOSC = mBody.createInstance<Ocsillators>();
+        mVL = mBody.createInstance<VoltageCircle>();
         mSL = mPlant.createInstance<ScanLines>();
         
-        mHead.setBlendMode(OF_BLENDMODE_ADD);
-        mBody.setBlendMode(OF_BLENDMODE_ADD);
-        mPlant.setBlendMode(OF_BLENDMODE_ADD);
+        mHead.setBlendMode(OF_BLENDMODE_ALPHA);
+        mBody.setBlendMode(OF_BLENDMODE_ALPHA);
+        mPlant.setBlendMode(OF_BLENDMODE_ALPHA);
         
         ofFbo::Settings s1;
         s1.width  = plant::edgeW;
@@ -53,9 +58,12 @@ public:
         s2.internalformat = GL_RGBA;
         mPlant.setFboAllocate(s3);
         
-        mHead.playAll();
-        mBody.playAll();
-        mPlant.playAll();
+//        mHead.playAll();
+//        mBody.playAll();
+//        mPlant.playAll();
+        mOSC->play();
+        mDL->play();
+        mSL->play();
         
         //----------
         // setup timeline
@@ -77,8 +85,9 @@ public:
     void draw()
     {
         unsigned char g = timeline.getValue("bgbri");
-        mHead.setBackgroundColor(ofColor(g,g,g,g));
-        mBody.setBackgroundColor(ofColor(g,g,g,g));
+        ofBackground(g, g, g);
+//        mHead.setBackgroundColor(ofColor(g,g,g,g));
+//        mBody.setBackgroundColor(ofColor(g,g,g,g));
 //        mPlant.setBackgroundColor(ofColor(g,g,g,g));
         
         mHead.draw(plant::edgeX, plant::edgeY, plant::edgeW, plant::edgeH);
@@ -92,12 +101,16 @@ public:
         mBody.sendMessageAll(key);
         
         if (key == 'q') mSL->createVerticalScanLine(0, plant::height, true, 8);
+        
+        if (key == 'c') mVL->stop();
     }
     
     void getFlag(ofxTLBangEventArgs & args)
     {
         if (args.flag == "1") keyPressed('1');
         if (args.flag == "2") keyPressed('2');
+        if (args.flag == "3") keyPressed('3');
+        if (args.flag == "c") mVL->play();
         if (args.flag == "sl") keyPressed('q');
     }
 };

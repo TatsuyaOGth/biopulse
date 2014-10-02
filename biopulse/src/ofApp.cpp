@@ -7,12 +7,15 @@
 #define FOR_SCENES for (vector<scenePtr>::iterator it = mScenes.begin(); it != mScenes.end(); it++)
 #define CURRENT_SCENE mScenes[mNumCurrentScene]
 
+OscSenderController BaseContentsInterface::smOscSender("127.0.0.1", 9999);
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
     ofSetWindowShape(plant::width, plant::height);
     ofxTimeline::removeCocoaMenusFromGlut("biopulse");
+    
     
     //----------
     // set dataset
@@ -37,7 +40,6 @@ void ofApp::setup(){
         it->get()->setup();
     }
     CURRENT_SCENE->setEnableTimeline(true);
-//    CURRENT_SCENE->setup();
     
     
     //-----------
@@ -87,8 +89,8 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     switch (key) {
         case OF_KEY_TAB: mMode = (mMode + 1) % 4; break;
-        case OF_KEY_LEFT:  mNumCurrentScene = changeScene(-1); break;
-        case OF_KEY_RIGHT: mNumCurrentScene = changeScene( 1); break;
+        case '<': mNumCurrentScene = changeScene(-1); break;
+        case '>': mNumCurrentScene = changeScene( 1); break;
         
             
         default: CURRENT_SCENE->keyPressed(key); break;

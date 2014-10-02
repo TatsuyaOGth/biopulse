@@ -311,6 +311,7 @@
 		8C78F1BC97D419A7C064143D /* b2CircleShape.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2CircleShape.h; path = ../../../addons/ofxBox2d/libs/Box2D/Collision/Shapes/b2CircleShape.h; sourceTree = SOURCE_ROOT; };
 		8D1FC15F5941283F4A9E70D3 /* b2PrismaticJoint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2PrismaticJoint.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2PrismaticJoint.h; sourceTree = SOURCE_ROOT; };
 		8FCE85CD7CE653733B1C4438 /* b2EdgeAndCircleContact.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2EdgeAndCircleContact.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h; sourceTree = SOURCE_ROOT; };
+		9107B90B19DD186B00B49E68 /* VoltageCircle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoltageCircle.hpp; sourceTree = "<group>"; };
 		911A090419CAF06600C03816 /* SceneB.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneB.hpp; sourceTree = "<group>"; };
 		911C516719D9E31C00D17666 /* ScanLines.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScanLines.hpp; sourceTree = "<group>"; };
 		9122D0B019D728CD00E7F84C /* DataMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataMatrix.hpp; sourceTree = "<group>"; };
@@ -322,6 +323,7 @@
 		919225E419CC4E3A000720A9 /* ofxEasingCam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingCam.cpp; sourceTree = "<group>"; };
 		919225E519CC4E3A000720A9 /* ofxEasingCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingCam.h; sourceTree = "<group>"; };
 		919225F119CC5DF0000720A9 /* SceneA.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneA.hpp; sourceTree = "<group>"; };
+		91AA1ECC19DC0BB700F1D725 /* OscSenderController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OscSenderController.hpp; sourceTree = "<group>"; };
 		91AE56FB19CFB47A00028DC7 /* Ground.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ground.hpp; sourceTree = "<group>"; };
 		91B7674519D69B6B00DACD9E /* DataLebel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataLebel.hpp; sourceTree = "<group>"; };
 		91D1406719CDF40500896CCC /* BaseSceneInterface.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseSceneInterface.hpp; sourceTree = "<group>"; };
@@ -912,6 +914,7 @@
 				91F949E019D5DB1700A2D34E /* BaseContentsInterface.h */,
 				9167419019D3D0B700D79D89 /* Ocsillators.hpp */,
 				91B7674519D69B6B00DACD9E /* DataLebel.hpp */,
+				9107B90B19DD186B00B49E68 /* VoltageCircle.hpp */,
 				911C516719D9E31C00D17666 /* ScanLines.hpp */,
 				91AE56FB19CFB47A00028DC7 /* Ground.hpp */,
 				91F949E219D5E78A00A2D34E /* VoltageIndicator.hpp */,
@@ -1567,6 +1570,7 @@
 			children = (
 				91D1406A19CDF57800896CCC /* common.h */,
 				91D1406919CDF45400896CCC /* DataController.hpp */,
+				91AA1ECC19DC0BB700F1D725 /* OscSenderController.hpp */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,

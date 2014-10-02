@@ -36,7 +36,7 @@ public:
         l.lineWidth = 1;
         if        ((mCounter % 500) == 0) {
             l.hLength = getHeight() * 0.9;
-            l.label = DATASET[0]->getCurrentData()->timestamp;
+//            l.label = DATASET[0]->getCurrentData()->timestamp;
             l.lineWidth = 2;
         } else if ((mCounter % 100) == 0) {
             l.hLength = getHeight() * 0.5;

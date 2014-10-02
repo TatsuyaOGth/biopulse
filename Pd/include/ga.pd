@@ -1,0 +1,18 @@
+#N canvas 501 428 450 300 10;
+#X obj 70 229 outlet~;
+#X obj 68 31 inlet;
+#X obj 71 67 * \$1;
+#X obj 65 119 + \$2;
+#X obj 65 158 osc~;
+#X obj 137 68 r gain;
+#X obj 142 114 r geta;
+#X obj 151 143 r amp;
+#X obj 69 191 *~ \$3;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 8 0;
+#X connect 5 0 2 1;
+#X connect 6 0 3 1;
+#X connect 7 0 8 1;
+#X connect 8 0 0 0;

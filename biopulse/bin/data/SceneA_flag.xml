@@ -1,47 +1,62 @@
 <keyframes>
     <key>
+        <flag>sl</flag>
+        <time>00:00:00:000</time>
+        <value>0.897134900</value>
+    </key>
+    <key>
+        <flag>sl</flag>
+        <time>00:00:11:581</time>
+        <value>0.844970226</value>
+    </key>
+    <key>
         <flag>1</flag>
-        <time>00:00:15:075</time>
-        <value>0.697916627</value>
+        <time>00:00:13:050</time>
+        <value>0.783889472</value>
     </key>
     <key>
         <flag>2</flag>
-        <time>00:00:25:725</time>
+        <time>00:00:21:450</time>
+        <value>0.132258654</value>
+    </key>
+    <key>
+        <flag>2</flag>
+        <time>00:00:26:370</time>
+        <value>0.145833313</value>
+    </key>
+    <key>
+        <flag>sl</flag>
+        <time>00:00:28:575</time>
+        <value>0.874132395</value>
+    </key>
+    <key>
+        <flag>2</flag>
+        <time>00:00:28:576</time>
         <value>0.145833313</value>
     </key>
     <key>
         <flag>2</flag>
-        <time>00:00:29:475</time>
-        <value>0.145833313</value>
-    </key>
-    <key>
-        <flag>2</flag>
-        <time>00:00:33:074</time>
-        <value>0.145833313</value>
-    </key>
-    <key>
-        <flag>2</flag>
-        <time>00:00:35:175</time>
-        <value>0.145833313</value>
-    </key>
-    <key>
-        <flag>2</flag>
-        <time>00:00:36:300</time>
+        <time>00:00:33:195</time>
         <value>0.125000000</value>
     </key>
     <key>
-        <flag>2</flag>
-        <time>00:00:37:350</time>
-        <value>0.135416687</value>
+        <flag>3</flag>
+        <time>00:00:36:795</time>
+        <value>0.020328283</value>
     </key>
     <key>
-        <flag>2</flag>
-        <time>00:00:38:324</time>
-        <value>0.135416687</value>
+        <flag>sl</flag>
+        <time>00:00:39:956</time>
+        <value>0.848491371</value>
     </key>
     <key>
-        <flag>2</flag>
-        <time>00:00:39:075</time>
-        <value>0.083798885</value>
+        <flag>c</flag>
+        <time>00:00:44:055</time>
+        <value>0.583710432</value>
+    </key>
+    <key>
+        <flag>sl</flag>
+        <time>00:00:55:993</time>
+        <value>0.830133379</value>
     </key>
 </keyframes>

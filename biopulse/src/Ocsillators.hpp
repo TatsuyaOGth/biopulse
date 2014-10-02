@@ -33,17 +33,26 @@ public:
             Data * data = DATASET[i]->getNextData();
             if (data == NULL) break;
             
+            smOscSender.setAddress("/osc");
+            smOscSender.addArg((int)i);
+            
             if (mode == 1) {
                 mWaves[i].push_back(0.0);
+                smOscSender.addArg((float)0.0);
             } else if (mode == 2) {
+                float v = 0;
                 if (mAssignQue[i])
-                    mWaves[i].push_back(data->voltage);
+                    v = data->voltage;
                 else
-                    mWaves[i].push_back(0);
+                    v = 0.0;
+                mWaves[i].push_back(v);
+                smOscSender.addArg((float)v);
             } else if (mode == 3) {
-                mWaves[i].push_back(data->voltage);
+                float v = data->voltage;
+                mWaves[i].push_back(v);
+                smOscSender.addArg((float)v);
             }
-            
+            smOscSender.send();
             if (mWaves[i].size() > data::bufferLength) mWaves[i].pop_front();
         }
     }
