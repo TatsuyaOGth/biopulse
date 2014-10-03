@@ -4,6 +4,8 @@
 #include "common.h"
 #include "DataController.hpp"
 #include "BaseSceneInterface.hpp"
+#include "MidiSenderController.hpp"
+#include "MidiReceiverController.hpp"
 #include "ofxExtras.h"
 #include "ofxOsc.h"
 
@@ -23,6 +25,7 @@ public:
     void windowResized(int w, int h);
     
     int changeScene(int mv);
+    void receivedMidiMessage(ofxMidiMessage & e);
     
     DataController * mDataController;
     

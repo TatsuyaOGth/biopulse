@@ -18,6 +18,14 @@ void ofApp::setup(){
     
     
     //----------
+    // setup midi
+    //----------
+    MIDI_SENDER->listPorts();
+    MIDI_SENDER->mMidiOut.openPort(0);
+    MIDI_RECEIVER->openPort(1);
+    ofAddListener(MIDI_RECEIVER->receivedMidiEvent, this, &ofApp::receivedMidiMessage);
+    
+    //----------
     // set dataset
     //----------
     if (!DATA_CONTROLLER->loadDataSet("dataset")) {
@@ -57,6 +65,7 @@ void ofApp::update(){
     
     
     CURRENT_SCENE->update();
+    MIDI_SENDER->update();
 }
 
 //--------------------------------------------------------------
@@ -92,6 +101,7 @@ void ofApp::keyPressed(int key){
         case '<': mNumCurrentScene = changeScene(-1); break;
         case '>': mNumCurrentScene = changeScene( 1); break;
         
+        case 'n': MIDI_SENDER->ctlOut(1, 127, 1); break;
             
         default: CURRENT_SCENE->keyPressed(key); break;
     }
@@ -140,5 +150,10 @@ int ofApp::changeScene(int mv)
 //    CURRENT_SCENE->setup();
     CURRENT_SCENE->setEnableTimeline(true);
     return mNumCurrentScene;
+}
+
+void ofApp::receivedMidiMessage(ofxMidiMessage & e)
+{
+    cout << e.toString() << endl;
 }
 

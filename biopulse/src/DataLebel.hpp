@@ -47,7 +47,7 @@ public:
         } else if ((mCounter % 2) == 0) {
             l.hLength = getHeight() * 0.15;
         } else {
-            l.hLength = 1;
+            l.hLength = 0;
         }
         mLines.push_back(l);
         

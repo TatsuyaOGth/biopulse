@@ -2,6 +2,10 @@
 
 #include "common.h"
 #include "OscSenderController.hpp"
+#include "MidiSenderController.hpp"
+#include "MidiReceiverController.hpp"
+
+#define MIDI_SENDER MidiSenderController::getInstance()
 
 namespace rs
 {
