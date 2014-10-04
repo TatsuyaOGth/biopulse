@@ -36,24 +36,59 @@ class ScanLines : public BaseContentsInterface
             ofLine(mPosX, 0, mPosX, mPare->getHeight());
         }
     };
-    ofxAnimationPrimitives::InstanceManager mVerticalScanLines;
+    
+    class SimpleCircle : public ofxAnimationPrimitives::Instance
+    {
+        float mX, mY, mRadius;
+    public:
+        SimpleCircle(float x, float y, float radius)
+        {
+            mX = x;
+            mY = y;
+            mRadius = radius;
+        }
+        void draw()
+        {
+            ofFill();
+            ofCircle(mX, mY, mRadius);
+        }
+    };
+    
+    ofxAnimationPrimitives::InstanceManager mInstances;
 
+public:
+    ofColor mCol;
+    int mLineWidth;
     
 public:
+    
+    
+    ScanLines()
+    {
+        mCol.set(0, 0, 0);
+        mLineWidth = 1;
+    }
+    
     void update()
     {
-        mVerticalScanLines.update();
+        mInstances.update();
     }
     
     void draw()
     {
-        ofSetColor(0, 0, 0);
-        ofSetLineWidth(1);
-        mVerticalScanLines.draw();
+        ofSetColor(mCol);
+        ofSetLineWidth(mLineWidth);
+        mInstances.draw();
     }
     
     void createVerticalScanLine(float startH, float stopH, bool right, float duration)
     {
-        mVerticalScanLines.createInstance<VerticalScanLine>(this, startH, stopH, right)->play(duration);
+        mInstances.createInstance<VerticalScanLine>(this, startH, stopH, right)->play(duration);
     }
+    
+    void createSimpleCircle(float x, float y, float radius, float duration) {
+        mInstances.createInstance<SimpleCircle>(x, y, radius)->play(duration);
+    }
+    
+    void setColor(ofColor & col) { mCol.set(col); }
 };

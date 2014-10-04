@@ -9,7 +9,7 @@
 #include "GenerativeObject.hpp"
 #include "Radiation.hpp"
 #include "PatternExample.hpp"
-
+#include "ScanLines.hpp"
 
 class SceneB : public BaseSceneInterfase
 {
@@ -23,6 +23,7 @@ class SceneB : public BaseSceneInterfase
     GenerativeObject * mGO;
     Radiation * mRD;
     PatternExample * mPT;
+    ScanLines * mSL;
     
 public:
     
@@ -38,9 +39,17 @@ public:
         mGO     = mBody.createInstance<GenerativeObject>();
         mRD     = mBody.createInstance<Radiation>();
         mPT     = mBody.createInstance<PatternExample>();
+        mSL     = mBody.createInstance<ScanLines>();
         
         mBody.setBlendMode(OF_BLENDMODE_ADD);
         
+        // init
+        mSL->mCol.set(255);
+        mSL->mLineWidth = 4;
+        
+        //----------
+        // setup contents fbo
+        //----------
         ofFbo::Settings s1;
         s1.width  = plant::edgeW;
         s1.height = plant::edgeH;
@@ -139,6 +148,77 @@ public:
     
     void receivedMidiMessage(ofxMidiMessage & e)
     {
+        if (e.status == MIDI_NOTE_ON) {
+            if (e.channel == 1) {
+            }
+            if (e.channel == 2) {
+            }
+            if (e.channel == 3) {
+            }
+            if (e.channel == 4) {
+            }
+            if (e.channel == 5) {
+            }
+            if (e.channel == 6) {
+            }
+            if (e.channel == 7) {
+            }
+            if (e.channel == 8) { // pan sign
+                if (e.pitch == 117) {
+                    mSL->createVerticalScanLine(0, plant::bodyH, true, 1);
+                }
+                if (e.pitch == 120) {
+                    mSL->createSimpleCircle(plant::bodyW * 0.5, plant::bodyH * 0.5, 20, 0.05);
+                }
+            }
+            if (e.channel == 9) {
+            }
+            if (e.channel == 10) {
+            }
+            
+            if (e.channel == 16) {
+                if (e.pitch == 0) {
+                    mVL->play();
+                    mSL->play();
+                    mDT->play();
+                    mR->stop();
+                    mRD->stop();
+                    mPT->stop();
+                    mGO->stop();
+                }
+                if (e.pitch == 1) {
+                    mVL->play();
+                    mSL->play();
+                    mDT->stop();
+                    mR->play();
+                    mRD->stop();
+                    mPT->stop();
+                    mGO->stop();
+                }
+            }
+        }
         
+        if (e.status == MIDI_NOTE_OFF) {
+            if (e.channel == 1) {
+            }
+            if (e.channel == 2) {
+            }
+            if (e.channel == 3) {
+            }
+            if (e.channel == 4) {
+            }
+            if (e.channel == 5) {
+            }
+            if (e.channel == 6) {
+            }
+            if (e.channel == 7) {
+            }
+            if (e.channel == 8) {
+            }
+            if (e.channel == 9) {
+            }
+            if (e.channel == 10) {
+            }
+        }
     }
 };

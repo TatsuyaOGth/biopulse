@@ -16,15 +16,6 @@ void ofApp::setup(){
     ofSetWindowShape(plant::width, plant::height);
     ofxTimeline::removeCocoaMenusFromGlut("biopulse");
     
-    
-    //----------
-    // setup midi
-    //----------
-    MIDI_SENDER->listPorts();
-    MIDI_SENDER->mMidiOut.openPort("IAC Driver buss 2");
-    MIDI_RECEIVER->openPort("IAC Driver buss 1");
-    ofAddListener(MIDI_RECEIVER->receivedMidiEvent, this, &ofApp::receivedMidiMessage);
-    
     //----------
     // set dataset
     //----------
@@ -34,6 +25,14 @@ void ofApp::setup(){
     }
     data::bufferLength = 256;
     data::gain = 1;
+    
+    //----------
+    // setup midi
+    //----------
+    MIDI_SENDER->listPorts();
+    MIDI_SENDER->mMidiOut.openPort("IAC Driver buss 2");
+    MIDI_RECEIVER->openPort("IAC Driver buss 1");
+    ofAddListener(MIDI_RECEIVER->receivedMidiEvent, this, &ofApp::receivedMidiMessage);
     
     //----------
     // create scenes
@@ -154,6 +153,6 @@ int ofApp::changeScene(int mv)
 
 void ofApp::receivedMidiMessage(ofxMidiMessage & e)
 {
-    cout << e.toString() << endl;
+//    cout << e.toString() << endl;
 }
 
