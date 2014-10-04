@@ -21,8 +21,8 @@ void ofApp::setup(){
     // setup midi
     //----------
     MIDI_SENDER->listPorts();
-    MIDI_SENDER->mMidiOut.openPort(0);
-    MIDI_RECEIVER->openPort(1);
+    MIDI_SENDER->mMidiOut.openPort("IAC Driver buss 2");
+    MIDI_RECEIVER->openPort("IAC Driver buss 1");
     ofAddListener(MIDI_RECEIVER->receivedMidiEvent, this, &ofApp::receivedMidiMessage);
     
     //----------
@@ -71,7 +71,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(0, 0, 0);
-    
+    ofSetWindowTitle("scene: " + ofToString(mNumCurrentScene));
     
     CURRENT_SCENE->draw();
     

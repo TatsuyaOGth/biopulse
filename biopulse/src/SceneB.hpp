@@ -1,8 +1,7 @@
 #pragma once
 
 #include "BaseSceneInterface.hpp"
-#include "ofxEasingCam.h"
-#include "ofxAnimationPrimitives.h"
+#include "MidiReceiverController.hpp"
 #include "Ground.hpp"
 #include "VoltageIndicator.hpp"
 #include "DataMatrix.hpp"
@@ -71,6 +70,11 @@ public:
         timeline.addCurves("bgbri", ofRange(0, 255));
         
         ofAddListener(timeline.events().bangFired, this, &SceneB::getFlag);
+        
+        //----------
+        // setup midi receiver
+        //----------
+        ofAddListener(MIDI_RECEIVER->receivedMidiEvent, this, &SceneB::receivedMidiMessage);
     }
     
     void update()
@@ -131,5 +135,10 @@ public:
             case 4: mPT->play(sw); break;
             case 5: mGO->play(sw); break;
         }
+    }
+    
+    void receivedMidiMessage(ofxMidiMessage & e)
+    {
+        
     }
 };

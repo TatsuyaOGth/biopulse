@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BaseContentsInterface.h"
-#include "ofxAnimationPrimitives.h"
+#include "ofxEasingCam.h"
 
 class Ground : public BaseContentsInterface
 {

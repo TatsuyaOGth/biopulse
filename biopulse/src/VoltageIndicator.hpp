@@ -16,7 +16,6 @@ class VoltageIndicator : public BaseContentsInterface
         float mAreaHeight;
         bool bStay;
         
-        
     public:
         ScanLine(float pos, float speed, float width, float height, float areaWidth, float areaHeight)
         {
@@ -55,6 +54,10 @@ class VoltageIndicator : public BaseContentsInterface
     
     ofxAnimationPrimitives::InstanceManager mScanLines;
     
+    
+    
+    
+    float mMoveRulurX;
     deque<float> mWave;
     
 public:
@@ -64,6 +67,7 @@ public:
         for (int i = 0; i < data::bufferLength; i++) {
             mWave.push_back(DATASET[0]->getNextData()->voltage);
         }
+        mMoveRulurX = 0;
     }
     
     void update()
@@ -118,6 +122,20 @@ public:
             ofLine(0, i, getWidth(), i);
         }
         
+        // move ruler
+        float moveWidthSize = getWidth() / data::bufferLength;
+        float oneWidthSize = getWidth() / 40;
+        int offsetFrameMax = (int)ceil(oneWidthSize / moveWidthSize);
+        mMoveRulurX += moveWidthSize;
+        if (mMoveRulurX > oneWidthSize) mMoveRulurX -= oneWidthSize;
+        ofPushMatrix();
+        ofSetColor(90);
+        ofTranslate(-mMoveRulurX, 0);
+        for (int i = 0; i <= getWidth(); i += 40) {
+            ofLine(i, 0 + topLane, i, getHeight() - bottomLane);
+        }
+        ofPopMatrix();
+        
         // holizon line
         ofSetColor(80);
         ofLine(0, getHeight() * 0.5, getWidth(), getHeight() * 0.5);
@@ -125,12 +143,16 @@ public:
         ofLine(0, getHeight() - bottomLane, getWidth(), getHeight() - bottomLane);
         
         // panchi
-        ofSetColor(abs(sin(share::elapsedTimef)) * 60 + 20);
+        ofSetColor(199);
+        ofRect(0, 0, getWidth(), topLane);
+        ofRect(0, getHeight() - bottomLane, getWidth(), getHeight());
+        ofSetColor(0);
         int offset = ofGetFrameNum() % 40;
         for (int i = 0 + 20 + offset; i <= getWidth() + offset; i += 40) {
             ofEllipse(i, 0 + (topLane * 0.5), 12, 10);
             ofEllipse(i, getHeight() - (bottomLane * 0.5), 12, 10);
         }
+        
     }
     
     
