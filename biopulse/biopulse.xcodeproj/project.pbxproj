@@ -332,6 +332,7 @@
 		914AFB9119D98A6000E433C1 /* ofxPostGlitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPostGlitch.h; sourceTree = "<group>"; };
 		914AFB9419D98AC600E433C1 /* myShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = myShaders; path = bin/data/myShaders; sourceTree = "<group>"; };
 		9167419019D3D0B700D79D89 /* Ocsillators.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ocsillators.hpp; sourceTree = "<group>"; };
+		91813CFB19E1435E0053D0DD /* TwiceObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TwiceObject.hpp; sourceTree = "<group>"; };
 		919225E419CC4E3A000720A9 /* ofxEasingCam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEasingCam.cpp; sourceTree = "<group>"; };
 		919225E519CC4E3A000720A9 /* ofxEasingCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasingCam.h; sourceTree = "<group>"; };
 		919225F119CC5DF0000720A9 /* SceneA.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneA.hpp; sourceTree = "<group>"; };
@@ -965,6 +966,7 @@
 				914AFB6319D9637F00E433C1 /* ActioinDrawFrames.hpp */,
 				91D40FC019D83CBA002CEB53 /* EmittingObject.hpp */,
 				911F93AA19E0748E00E26A62 /* PostGlitch.hpp */,
+				91813CFB19E1435E0053D0DD /* TwiceObject.hpp */,
 			);
 			name = Contents;
 			sourceTree = "<group>";

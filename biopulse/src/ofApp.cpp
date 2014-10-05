@@ -24,7 +24,7 @@ void ofApp::setup(){
         ofLogError() << "faild load dataset";
         OF_EXIT_APP(1);
     }
-    data::bufferLength = 256;
+    data::bufferLength = 512;
     data::gain = 1;
     
     //----------
@@ -60,6 +60,7 @@ void ofApp::setup(){
     s1.internalformat = GL_RGBA;
     mFbo.allocate(s1);
     mGlitch = new PostGlitch(&mFbo);
+    share::mainFbo = &mFbo;
     
     //-----------
     // init values
@@ -174,12 +175,20 @@ int ofApp::changeScene(int mv)
 
 void ofApp::receivedMidiMessage(ofxMidiMessage & e)
 {
+    
 //    cout << e.toString() << endl;
     if (e.status == MIDI_NOTE_ON) {
+        
+        if (e.channel == 5) {
+            if (e.pitch == 105) {
+                mGlitch->setFxAsTime(OFXPOSTGLITCH_INVERT, 0.05);
+            }
+        }
+        
         if (e.channel == 7) {
             if (e.pitch == 45) {
 //                mGlitch->setFx(OFXPOSTGLITCH_SWELL, true);
-                mGlitch->setFxAsTime(OFXPOSTGLITCH_NOISE, 1);
+//                mGlitch->setFxAsTime(OFXPOSTGLITCH_TWIST, 1);
             }
             if (e.pitch == 43) {
 //                mGlitch->setFx(OFXPOSTGLITCH_NOISE, true);

@@ -59,6 +59,8 @@ public:
         mPointer = 0;
     }
     
+    void updatePointer(){ mPointer++; }
+    
     void getDataBetween(dataset_type * dst, int start, int end)
     {
         if (start < 0 || start >= data.size()) return;

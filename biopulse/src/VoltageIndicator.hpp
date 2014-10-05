@@ -8,24 +8,21 @@ class VoltageIndicator : public BaseContentsInterface
 {
     class ScanLine : public ofxAnimationPrimitives::Instance
     {
+        VoltageIndicator * p;
         float mPos;
         float mSpeed;
-        float mWidth;
-        float mHeight;
-        float mAreaWidth;
-        float mAreaHeight;
         bool bStay;
+        float mWidth;
+        
         
     public:
-        ScanLine(float pos, float speed, float width, float height, float areaWidth, float areaHeight)
+        ScanLine(VoltageIndicator * P, float pos, float speed)
         {
+            p = P;
             mPos = pos;
             mSpeed = speed;
-            mWidth = width;
-            mHeight = height;
-            mAreaWidth = areaWidth;
-            mAreaHeight = areaHeight;
             bStay = false;
+            mWidth = 2;
         }
         ~ScanLine(){}
         
@@ -33,72 +30,132 @@ class VoltageIndicator : public BaseContentsInterface
         {
             if (!bStay) {
                 mPos += mSpeed;
-                if (mPos < 0 || mPos + mWidth > mAreaWidth) {
-                    mSpeed *= -1;
-                }
+//                if (mPos < 0 || mPos + mWidth > p->getWidth()) {
+//                    mSpeed *= -1;
+//                }
+                if (mPos + mWidth < 0) mPos = p->getWidth();
+                if (mPos > p->getWidth()) mPos = -mWidth;
             }
         }
         
         void draw()
         {
-            ofSetColor(0, 0, 255, 200);
+            ofSetColor(0, 255, 255, 255);
             ofFill();
-            ofRect(mPos, 0, mWidth, mAreaWidth);
+            ofRect(mPos, 15, mWidth, p->getHeight() - 30);
         }
         
-        void stay(bool b)
-        {
-            bStay = b;
-        }
+        void stay(bool b){ bStay = b; }
+        bool isStay() { return bStay; }
+        float getPos() { return mPos; }
+        void addSpeed(float v){ mSpeed > 0 ?  mSpeed += v : mSpeed -= v; }
     };
     
     ofxAnimationPrimitives::InstanceManager mScanLines;
+    vector<ScanLine*> mScanLinePtr;
     
-    
-    
+    //=============================================================================
     
     float mMoveRulurX;
-    deque<float> mWave;
+    vector<vector<float> > mWaves;
+    
+public:
+    int mNumMaxDataIndex; // 0~
     
 public:
     
     VoltageIndicator()
     {
-        for (int i = 0; i < data::bufferLength; i++) {
-            mWave.push_back(DATASET[0]->getNextData()->voltage);
-        }
         mMoveRulurX = 0;
+        mWaves.resize(DATASET.size(), vector<float>(data::bufferLength));
+        updateWaves();
+        
+        mNumMaxDataIndex = 0;
     }
     
     void update()
     {
-        mWave.push_back(DATASET[0]->getNextData()->voltage);
-        if (mWave.size() > data::bufferLength) mWave.pop_front();
-        
+        updateWaves();
         mScanLines.update();
     }
     
     void draw()
     {
         drawGraphLine();
-        drawGraph();
+        
+        // draw voltage
+        for (int i = 0; i < mNumMaxDataIndex; i++) {
+            drawGraph(i, (i % 2 == 0) ? false : true );
+        }
+        // draw scanlines
         mScanLines.draw();
+        // draw barcode
+        rs::scanedVoltages.clear();
+        for (int i = 0; i < mScanLinePtr.size(); i++) {
+            if (mScanLinePtr[i]->isStay()) {
+                ofSetColor(255, 255, 255);
+                float pos = mScanLinePtr[i]->getPos();
+                int posi = (int)(pos / (float)data::bufferLength);
+                vector<float> v;
+                for (int j = 0; j < mNumMaxDataIndex; j++) {
+                    if (j >= mWaves.size()) break;
+                    float vol = mWaves[j][posi];
+                    v.push_back(vol);
+                    drawBarcode(ofToBinary(vol), pos, (getHeight() * 0.5) + (vol * getHeight()), 96, 5);
+                }
+                rs::scanedVoltages.push_back(v);
+            }
+        }
+        
+    }
+    
+    void updateWaves()
+    {
+        int j = 0;
+        for (DATASET_IT it = DATASET.begin(); it != DATASET.end(); it++) {
+            for (int i = 0; i < data::bufferLength; i++) {
+                mWaves[j][i] = ((*it)->getTargetData(i)->voltage);
+            }
+            j++;
+        }
     }
     
     void gotMessage(int msg)
     {
-        if (msg == 1) mScanLines.createInstance<ScanLine>(
-                                                          ofRandom(getWidth() - 20),
-                                                          ofRandom(-5, 5),
-                                                          5,
-                                                          getHeight() - 20,
-                                                          getWidth(),
-                                                          getHeight()
-                                                          )->playInfinity();
-        if (msg == 2) mScanLines.release<ScanLine>();
     }
     
+    void createScanLine()
+    {
+        mScanLinePtr.push_back(mScanLines.createInstance<ScanLine>(this, ofRandom(getWidth() - 20), ofRandom(-5, 5)));
+        mScanLinePtr.back()->playInfinity();
+    }
     
+    void removeScanLines()
+    {
+        mScanLines.release<ScanLine>();
+        mScanLinePtr.clear();
+    }
+    
+    void stopScanLines()
+    {
+        for (int i = 0; i < mScanLinePtr.size(); i++) {
+            mScanLinePtr[i]->stay(true);
+        }
+    }
+    
+    void moveScanLines()
+    {
+        for (int i = 0; i < mScanLinePtr.size(); i++) {
+            mScanLinePtr[i]->stay(false);
+        }
+    }
+    
+    void addSpeedScanLines(float v)
+    {
+        for (int i = 0; i < mScanLinePtr.size(); i++) {
+            mScanLinePtr[i]->addSpeed(v);
+        }
+    }
     
     void drawGraphLine()
     {
@@ -129,64 +186,68 @@ public:
         mMoveRulurX += moveWidthSize;
         if (mMoveRulurX > oneWidthSize) mMoveRulurX -= oneWidthSize;
         ofPushMatrix();
-        ofSetColor(90);
+        ofSetColor(125);
         ofTranslate(-mMoveRulurX, 0);
-        for (int i = 0; i <= getWidth(); i += 40) {
+        for (int i = 0; i <= getWidth(); i += 20) {
             ofLine(i, 0 + topLane, i, getHeight() - bottomLane);
         }
         ofPopMatrix();
         
         // holizon line
-        ofSetColor(80);
+        ofSetColor(99);
         ofLine(0, getHeight() * 0.5, getWidth(), getHeight() * 0.5);
         ofLine(0, 0 + topLane, getWidth(), 0 + topLane);
         ofLine(0, getHeight() - bottomLane, getWidth(), getHeight() - bottomLane);
         
         // panchi
-        ofSetColor(199);
+        ofSetColor(0);
         ofRect(0, 0, getWidth(), topLane);
         ofRect(0, getHeight() - bottomLane, getWidth(), getHeight());
-        ofSetColor(0);
+        ofSetColor(199);
         int offset = ofGetFrameNum() % 40;
         for (int i = 0 + 20 + offset; i <= getWidth() + offset; i += 40) {
             ofEllipse(i, 0 + (topLane * 0.5), 12, 10);
             ofEllipse(i, getHeight() - (bottomLane * 0.5), 12, 10);
         }
-        
     }
     
     
-    void drawGraph()
+    void drawGraph(int n, bool reverse = false)
     {
+        if (n >= mWaves.size()) return;
         ofSetColor(255, 255, 255);
-//        float l = 25;
-//        float x1 = getWidth();
-//        float y1 = plant::edgeRect.getCenter().y + mDataset->get()->getVoltageOnStartPoint() - 10;
-//        float x2 = plant::edgeRect.getMaxX() - l;
-//        float y2 = plant::edgeRect.getCenter().y + mDataset->get()->getVoltageOnStartPoint();
-//        float x3 = plant::edgeRect.getMaxX();
-//        float y3 = plant::edgeRect.getCenter().y + mDataset->get()->getVoltageOnStartPoint() + 10;
-//        ofTriangle(x1, y1, x2, y2, x3, y3);
-        
-//        ofSetColor(0, 255, 0);
-//        ofNoFill();
-//        mDataset->get()->draw(0, 0, getWidth() - l, getHeight());
         
         ofMesh mesh;
         mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
-        int l = mWave.size() - 1;
-        for (int j = 0; j < mWave.size(); j++, l--) {
-            int k = ofMap(j, 0, data::bufferLength, getWidth(), 0);
-            mesh.addColor(ofColor(0, 255, 0));
-            mesh.addVertex(ofVec3f(k, mWave[l] * getHeight(), 0));
+        if (reverse) {
+            for (int i = mWaves[n].size() - 1; i >= 0 ; i--) {
+                int k = ofMap(i, 0, data::bufferLength, getWidth(), 0);
+                mesh.addColor(ofColor(0, 255, 0));
+                mesh.addVertex(ofVec3f(k, mWaves[n][i] * getHeight(), 0));
+            }
+        } else {
+            int l = mWaves[n].size() - 1;
+            for (int j = 0; j < mWaves[n].size(); j++, l--) {
+                int k = ofMap(j, 0, data::bufferLength, getWidth(), 0);
+                mesh.addColor(ofColor(0, 255, 0));
+                mesh.addVertex(ofVec3f(k, mWaves[n][l] * getHeight(), 0));
+            }
         }
         ofPushMatrix();
         ofTranslate(0, getHeight() * 0.5);
         mesh.draw();
         ofPopMatrix();
-
     }
     
-
+    void drawBarcode(string binalyString, float x, float y, float w, float h)
+    {
+        ofFill();
+        float size = w / (float)binalyString.size();
+        int i = 0;
+        for (string::iterator it = binalyString.begin(); it != binalyString.end(); it++) {
+            if ((*it) == '1') ofRect(x + (i * size), y, size - 1, h);
+            i++;
+        }
+    }
     
 };

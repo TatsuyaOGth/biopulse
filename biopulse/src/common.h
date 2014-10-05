@@ -117,4 +117,5 @@ namespace share
     static long long elapsedTimeMillis = 0;
     static long long elapsedTimeMicros = 0;
     static ofTrueTypeFont font;
+    static ofFbo * mainFbo;
 }

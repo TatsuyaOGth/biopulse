@@ -11,6 +11,7 @@ namespace rs
 {
     static ofVideoPlayer radar;
     static vector<ofTexture> inks;
+    static vector<vector<float> > scanedVoltages;
 }
 
 class BaseContentsController;
@@ -67,8 +68,9 @@ public:
     virtual void update() {}
     virtual void draw() {}
     virtual void gotMessage(int msg) {}
+    virtual void setupedFbo() {}
     
-    inline void setupFbo(ofFbo::Settings settings) { mFbo.allocate(settings); }
+    inline void setupFbo(ofFbo::Settings settings) { mFbo.allocate(settings); setupedFbo(); }
     inline void setBackgroundColor(ofColor col) { mBGColor.set(col); }
     inline void setForegroundColor(ofColor col) { mFGColor.set(col); }
     inline void setBlendMode(ofBlendMode mode) { mBlendMode = mode; }
@@ -412,3 +414,37 @@ public:
     
     //[[[end]]]
 };
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// template
+//////////////////////////////////////////////////////////////////////////////////
+/*
+
+#pragma once
+
+#include "BaseContentsInterface.h"
+
+class <#class name#> : public BaseContentsInterface
+{
+public:
+    <#class name#>()
+    {
+        
+    }
+    
+    void update()
+    {
+        
+    }
+    
+    void draw()
+    {
+        
+    }
+};
+
+
+
+
+*/

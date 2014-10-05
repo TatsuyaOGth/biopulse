@@ -41,4 +41,22 @@
         <time>00:00:30:916</time>
         <value>0.049019635</value>
     </key>
+    <key>
+        <easefunc>0</easefunc>
+        <easetype>0</easetype>
+        <time>00:00:41:175</time>
+        <value>0.225000024</value>
+    </key>
+    <key>
+        <easefunc>0</easefunc>
+        <easetype>0</easetype>
+        <time>00:01:07:387</time>
+        <value>0.949999988</value>
+    </key>
+    <key>
+        <easefunc>0</easefunc>
+        <easetype>0</easetype>
+        <time>00:01:15:262</time>
+        <value>0.324999988</value>
+    </key>
 </keyframes>

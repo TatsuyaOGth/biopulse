@@ -13,6 +13,7 @@
 #include "RotationBox.hpp"
 #include "TargetRadar.hpp"
 #include "EmittingObject.hpp"
+#include "TwiceObject.hpp"
 
 class SceneB : public BaseSceneInterfase
 {
@@ -32,6 +33,9 @@ class SceneB : public BaseSceneInterfase
     RotationBox * mBX;
     TargetRadar * mTR;
     EmittingObject * mEM;
+    TwiceObject * mTW;
+    
+    bool bNoise;
     
 public:
     
@@ -52,6 +56,7 @@ public:
         mEM     = mBody.createInstance<EmittingObject>();
         mBX     = mBody.createInstance<RotationBox>();
         mTR     = mBody.createInstance<TargetRadar>();
+        mTW     = mBody.createInstance<TwiceObject>();
         mSL     = mBody.createInstance<ScanLines>();
         
         mBody.setBlendMode(OF_BLENDMODE_ADD);
@@ -109,10 +114,22 @@ public:
         // setup midi receiver
         //----------
         ofAddListener(MIDI_RECEIVER->receivedMidiEvent, this, &SceneB::receivedMidiMessage);
+        
+        bNoise = false;
     }
     
     void update()
     {
+        //----------
+        // update data pointer
+        //----------
+        for (DATASET_IT it = DATASET.begin(); it != DATASET.end(); it++) {
+            (*it)->updatePointer();
+        }
+        
+        //----------
+        // update contents
+        //----------
         mHead.update();
         mBody.update();
         mPlant.update();
@@ -128,6 +145,15 @@ public:
         mHead.draw(plant::edgeX, plant::edgeY, plant::edgeW, plant::edgeH);
         mBody.draw(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
         mPlant.draw(0, 0, plant::width, plant::width);
+        
+        if (bNoise) {
+            ofPushMatrix();
+            float dx = (ofGetFrameNum() % 2 == 0) ? ofRandom(-4, -2) : ofRandom(2, 4);
+            ofTranslate(dx, 0);
+            share::mainFbo->getTextureReference().drawSubsection(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH,
+                                                                 plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
+        }
+        ofPopMatrix();
         ofPopStyle();
         
     }
@@ -151,10 +177,10 @@ public:
     
     void keyPressed( int key )
     {
-        if (key == 'q') mDT->togglePlay();
-        if (key == 'w') mR->togglePlay();
-        if (key == 'e') mRD->togglePlay();
-        if (key == 'r') mPT->togglePlay();
+        if (key == 'q') mVL->createScanLine();
+        if (key == 'w') mVL->stopScanLines();
+        if (key == 'e') mVL->moveScanLines();
+        if (key == 'r') mVL->addSpeedScanLines(0.5);
         
         mHead.sendMessageAll(key);
         mBody.sendMessageAll(key);
@@ -187,20 +213,22 @@ public:
             }
             if (e.channel == 5) {
                 if (e.pitch == 105) {
-                    mSL->createStrobo(0.05, false);
-                    for (int i = 0; i < 8; i++) {
-                        mSL->createRippleCircles(320 + (i * 20), 0.05, 4);
-//                        mSL->createRippleArc(260 + (ofRandom(200)), 0.03, 4.5);
+                    for (int i = 0; i < 12; i++) {
+                        mSL->createRippleCircles(280 + (i * 20), 0.05, 4);
                     }
+                    mVL->moveScanLines();
+                } else {
+                    mVL->stopScanLines();
                 }
             }
             if (e.channel == 6) {
             }
             if (e.channel == 7) {
-                if (e.channel == 7) {
-                    if (e.pitch == 43) {
-                        mSL->createVerticalSplitWave(0.3);
-                    }
+                if (e.pitch == 45) {
+                    bNoise = true;
+                }
+                if (e.pitch == 43) {
+                    mSL->createVerticalSplitWave(0.3);
                 }
             }
             if (e.channel == 8) { // pan sign
@@ -216,10 +244,11 @@ public:
                 mEM->mSize = 45;
             }
             if (e.channel == 10) {
+                mTW->play();
             }
             
             if (e.channel == 16) {
-                if (e.pitch == 0) { // scene B-1
+                if (e.pitch == 0) { // scene B-1 matrix
                     mVL->play();
                     mSL->play();
                     mGD->stop();
@@ -231,8 +260,12 @@ public:
                     mBX->stop();
                     mTR->stop();
                     mEM->stop();
+                    mTW->stop();
+                    mVL->mNumMaxDataIndex = 1;
+                    data::bufferLength = 512;
+                    mVL->removeScanLines();
                 }
-                if (e.pitch == 1) { // scene B-2
+                if (e.pitch == 1) { // scene B-2 radar
                     mVL->play();
                     mSL->play();
                     mGD->stop();
@@ -244,6 +277,10 @@ public:
                     mBX->stop();
                     mTR->play();
                     mEM->stop();
+                    mTW->stop();
+                    mVL->mNumMaxDataIndex = 3;
+                    data::bufferLength = 256;
+                    mVL->createScanLine();
                 }
                 if (e.pitch == 2) { // scene B-3
                     mVL->play();
@@ -251,12 +288,16 @@ public:
                     mGD->stop();
                     mDT->stop();
                     mR->play();
-                    mRD->stop();
+                    mRD->play();
                     mPT->stop();
                     mGO->stop();
                     mBX->stop();
                     mTR->play();
                     mEM->stop();
+                    mTW->stop();
+                    mVL->mNumMaxDataIndex = 7;
+                    data::bufferLength = 127;
+                    for (int i = 0; i < 2; i++) mVL->createScanLine();
                 }
                 if (e.pitch == 3) { // scene B-4
                     mVL->play();
@@ -264,12 +305,19 @@ public:
                     mGD->stop();
                     mDT->stop();
                     mR->play();
-                    mRD->stop();
+                    mRD->play();
                     mPT->stop();
                     mGO->stop();
                     mBX->play();
                     mTR->play();
                     mEM->play();
+                    mTW->stop();
+                    mVL->mNumMaxDataIndex = 11;
+                    data::bufferLength = 64;
+                    for (int i = 0; i < 2; i++) {
+                        mVL->createScanLine();
+                        mVL->addSpeedScanLines(3);
+                    }
                 }
                 if (e.pitch == 4) { // scene B-5
                     mVL->stop();
@@ -283,6 +331,8 @@ public:
                     mBX->stop();
                     mTR->stop();
                     mEM->play();
+                    mTW->stop();
+                    mVL->mNumMaxDataIndex = 0;
                 }
                 if (e.pitch == 10) { // shange matrix mode
                     mDT->mode = 1;
@@ -305,6 +355,9 @@ public:
             if (e.channel == 6) {
             }
             if (e.channel == 7) {
+                if (e.pitch == 45) {
+                    bNoise = false;
+                }
             }
             if (e.channel == 8) {
             }
@@ -312,6 +365,7 @@ public:
                 mEM->mSize = 20;
             }
             if (e.channel == 10) {
+                mTW->stop();
             }
         }
     }

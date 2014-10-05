@@ -9,6 +9,7 @@ class Radiation : public BaseContentsInterface
     int startAngle;
     int stopAngle;
     int mSpeed;
+    vector<vector<float> > mWaves;
     
 public:
     
@@ -18,14 +19,12 @@ public:
         startAngle = 0;
         stopAngle = 0;
         mSpeed = 1;
+        mWaves.resize(DATASET.size(), vector<float>(data::bufferLength));
     }
     
     void update()
     {
-        data.clear();
-        for (int i = startAngle; i < data::bufferLength + startAngle; i++) {
-            data.push_back(DATASET[0]->getTargetData(i));
-        }
+        updateWaves();
         
         startAngle += mSpeed;
         stopAngle = startAngle + data.size();
@@ -33,29 +32,51 @@ public:
 //        stopAngle = stopAngle % 360;
     }
     
+    void updateWaves()
+    {
+        int j = 0;
+        for (DATASET_IT it = DATASET.begin(); it != DATASET.end(); it++) {
+            for (int i = 0; i < data::bufferLength; i++) {
+                mWaves[j][i] = ((*it)->getTargetData(i)->voltage);
+            }
+            j++;
+        }
+    }
+    
     void draw()
     {
         ofPushMatrix();
         ofTranslate(getWidth() * 0.5, getHeight() * 0.5);
         
-        ofVboMesh mesh;
+        
 
 //        mesh.addColor(ofColor(255));
 //        mesh.addVertex(ofVec3f(0));
         int br = 2;
-        int n = data.size();
-        for (int i = 0; i < n; i += br) {
-            float f = -ofMap(i, 0, n, ofDegToRad((float)startAngle), ofDegToRad((float)stopAngle));
-            float x = radius * cos(f) * data[i]->voltage;;
-            float y = radius * sin(f) * data[i]->voltage;
-            mesh.addColor(ofColor(255));
-            mesh.addVertex(ofVec3f(x, y, 0));
+        for (int i = 0; i < mWaves.size(); i++) {
+            ofVboMesh mesh;
+            for (int j = 0; j < mWaves[i].size(); j++) {
+                int size = mWaves[i].size();
+                float voltage = mWaves[i][j];
+//                float f = -ofMap(j, 0, size, ofDegToRad((float)startAngle), ofDegToRad((float)stopAngle));
+                float f = ofMap(j, 0, size, 0, 2 );
+                float x = radius * cos(ofRadToDeg(f)) * voltage;
+                float y = radius * sin(ofRadToDeg(f)) * voltage;
+                mesh.addColor(ofColor(255));
+                mesh.addVertex(ofVec3f(x, y, 0));
+            }
+            mesh.setMode(OF_PRIMITIVE_LINE_LOOP);
+            mesh.drawWireframe();
+//            ofTranslate(ofRandom(-5, 5), 0);
+//            mesh.setMode(OF_PRIMITIVE_POINTS);
+//            mesh.drawVertices();
         }
-        mesh.setMode(OF_PRIMITIVE_LINE_LOOP);
-        mesh.drawWireframe();
-        ofTranslate(ofRandom(-5, 5), 0);
-        mesh.setMode(OF_PRIMITIVE_POINTS);
-        mesh.drawVertices();
         ofPopMatrix();
+        
+        for (int i = 0; i < rs::scanedVoltages.size(); i++) {
+            for (int j = 0; j < rs::scanedVoltages[i].size(); j++) {
+                ofDrawBitmapString(ofToString(rs::scanedVoltages[i][j]), i * 20, i * 16);
+            }
+        }
     }
 };
