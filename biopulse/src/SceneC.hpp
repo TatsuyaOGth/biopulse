@@ -51,7 +51,7 @@ public:
         timeline.addCurves("bgbri", ofRange(0, 255));
         timeline.addCurves("fgbri", ofRange(0, 255));
         timeline.addCurves("emsize", ofRange(0, 140));
-        timeline.addCurves("acscale", ofRange(0, 2));
+        timeline.addCurves("acscale", ofRange(0, 4));
         
         
         ofAddListener(timeline.events().bangFired, this, &SceneC::getFlag);

@@ -8,6 +8,9 @@ class EmittingObject : public BaseContentsInterface
     ofShader mShader;
     float resolution[2];
     float mousePos[2];
+    
+public:
+    float mBaseSize;
     float mSize;
     
 public:
@@ -19,7 +22,8 @@ public:
     
     void update()
     {
-        mSize += sin(share::elapsedTimef) * 20;
+        mBaseSize = (sin(share::elapsedTimef) * 5);
+        mBaseSize += mSize;
     }
     
     void draw()
@@ -30,8 +34,8 @@ public:
         mShader.begin();
         
         
-        resolution[0] = ofGetWidth();
-        resolution[1] = ofGetHeight();
+        resolution[0] = getWidth();
+        resolution[1] = getHeight();
         float time = ofGetElapsedTimef();
         
         mousePos[0] = (float)ofGetMouseX() / (float)ofGetWidth();
@@ -40,14 +44,14 @@ public:
         mShader.setUniform1f("time", time);
         mShader.setUniform2fv("resolution", resolution);
         mShader.setUniform2fv("mouse", mousePos);
-        mShader.setUniform1f("size", mSize);
+        mShader.setUniform1f("size", mBaseSize);
         
         //    glEnable(GL_DEPTH_TEST);
         glBegin(GL_TRIANGLE_STRIP);
         glVertex2f(0, 0);
-        glVertex2f(ofGetWidth(), 0);
-        glVertex2f(0, ofGetWidth());
-        glVertex2f(ofGetWidth(), ofGetHeight());
+        glVertex2f(getWidth(), 0);
+        glVertex2f(0, getWidth());
+        glVertex2f(getWidth(), getHeight());
         glEnd();
         mShader.end();
     }

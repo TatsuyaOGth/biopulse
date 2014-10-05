@@ -31,7 +31,7 @@ class ActionDrawFrames : public BaseContentsInterface
         {
             if (*bUpdate) {
                 mUpdateCount++;
-                if (mUpdateCount % 3 == 0) {
+                if (mUpdateCount % 5 == 0) {
                     if (mFrameCount < mFramesPtr->size() - 1) mFrameCount++;
                 }
             }
@@ -99,14 +99,8 @@ public:
             float vy = ofNoise(0, t);
             float x = (vx - 0.5) * 1000 + (getWidth()/2);
             float y = (vy - 0.5) * 1000 + (getHeight()/2);
-//            float rx = ofRandom(-100, 100);
-//            float ry = ofRandom(-100, 100);
-//            x += rx;
-//            y += ry;
             
             int i = (int)ofRandom(mFrameImgs.size());
-            //        x = debugMouseX(getWidth());
-            //        y = debugMouseY(getHeight());
             mFrames.createInstance<Frame>(x, y, mScale, ofRandom(360), &mFrameImgs[i], &bDraw)->play(14);
         }
         mFrames.update();

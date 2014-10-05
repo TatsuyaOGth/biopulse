@@ -4,7 +4,7 @@
 
 class DataMatrix : public BaseContentsInterface
 {
-    int mode;
+
     deque<string> list1;
     deque<string> list2;
     deque<string> list3;
@@ -12,6 +12,11 @@ class DataMatrix : public BaseContentsInterface
     deque<string> list5;
     deque<string> list6;
     deque< vector<string> > matrix;
+    
+    deque<vector<string> > binList;
+    
+public:
+    int mode;
     
 public:
     DataMatrix()
@@ -21,10 +26,12 @@ public:
     
     void update()
     {
+        Data * d1 = DATASET[0]->getNextData();
+        Data * d2 = DATASET[1]->getNextData();
+        Data * d3 = DATASET[2]->getNextData();
+        
         if (mode == 0) {
-            Data * d1 = DATASET[0]->getNextData();
-            Data * d2 = DATASET[1]->getNextData();
-            Data * d3 = DATASET[2]->getNextData();
+
             string s1 = "";
             string s2 = "";
             string s3 = "";
@@ -53,11 +60,20 @@ public:
             if (list5.size() > 36) list5.pop_front();
             if (list6.size() > 36) list6.pop_front();
         }
+        
+        if (mode == 1) {
+            vector<string> v;
+            v.push_back(ofToBinary(d1->voltage));
+            v.push_back(ofToBinary(d2->voltage));
+            v.push_back(ofToBinary(d3->voltage));
+            binList.push_back(v);
+            if (binList.size() > 60) binList.pop_front();
+        }
     }
     
     void draw()
     {
-        ofSetColor(190);
+        ofSetColor(255);
         
         if (mode == 0) {
             int x = 0;
@@ -71,6 +87,14 @@ public:
             for (int i = 0; i < list5.size(); i++) share::font.drawString(list5[i], x + (b1 * 2) + (b2 * 2), y + (i * 16));
             for (int i = 0; i < list6.size(); i++) share::font.drawString(list6[i], x + (b1 * 2) + (b2 * 2) + b1, y + (i * 16));
         }
+        if (mode == 1) {
+            float w = 270;
+            for (int i = 0; i < binList.size(); i++) {
+                for (int j = 0; j < binList[i].size(); j++) {
+                    drawBarcode(binList[i][j], j * w, i * 10, w, 8);
+                }
+            }
+        }
     }
     
     void gotMessage(int msg)
@@ -81,6 +105,17 @@ public:
             case '2': mode = 2; break;
             case '3': mode = 3; break;
             case '4': mode = 4; break;
+        }
+    }
+    
+    void drawBarcode(string binalyString, float x, float y, float w, float h)
+    {
+        ofFill();
+        float size = w / (float)binalyString.size();
+        int i = 0;
+        for (string::iterator it = binalyString.begin(); it != binalyString.end(); it++) {
+            if ((*it) == '1') ofRect(x + (i * size), y, size, h);
+            i++;
         }
     }
     

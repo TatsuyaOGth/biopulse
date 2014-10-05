@@ -323,7 +323,10 @@
 		9107B90B19DD186B00B49E68 /* VoltageCircle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoltageCircle.hpp; sourceTree = "<group>"; };
 		911A090419CAF06600C03816 /* SceneB.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneB.hpp; sourceTree = "<group>"; };
 		911C516719D9E31C00D17666 /* ScanLines.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScanLines.hpp; sourceTree = "<group>"; };
+		911F93AA19E0748E00E26A62 /* PostGlitch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PostGlitch.hpp; sourceTree = "<group>"; };
 		9122D0B019D728CD00E7F84C /* DataMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataMatrix.hpp; sourceTree = "<group>"; };
+		91457C7D19E10C3E0008BB8B /* RotationBox.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RotationBox.hpp; sourceTree = "<group>"; };
+		91457C7F19E1159C0008BB8B /* TargetRadar.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TargetRadar.hpp; sourceTree = "<group>"; };
 		914AFB6319D9637F00E433C1 /* ActioinDrawFrames.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActioinDrawFrames.hpp; sourceTree = "<group>"; };
 		914AFB9019D98A6000E433C1 /* ofxPostGlitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPostGlitch.cpp; sourceTree = "<group>"; };
 		914AFB9119D98A6000E433C1 /* ofxPostGlitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPostGlitch.h; sourceTree = "<group>"; };
@@ -950,15 +953,18 @@
 				9107B90B19DD186B00B49E68 /* VoltageCircle.hpp */,
 				911C516719D9E31C00D17666 /* ScanLines.hpp */,
 				91AE56FB19CFB47A00028DC7 /* Ground.hpp */,
+				91457C7D19E10C3E0008BB8B /* RotationBox.hpp */,
 				91F949E219D5E78A00A2D34E /* VoltageIndicator.hpp */,
 				9122D0B019D728CD00E7F84C /* DataMatrix.hpp */,
 				91D40FB019D7F2C7002CEB53 /* Radar.hpp */,
+				91457C7F19E1159C0008BB8B /* TargetRadar.hpp */,
 				91D40FB219D7F72B002CEB53 /* GenerativeObject.hpp */,
 				91D40FB819D80517002CEB53 /* Radiation.hpp */,
 				91D40FB719D7FE8D002CEB53 /* PatternExample.hpp */,
 				91D40FBC19D826DA002CEB53 /* ActionDrawing.hpp */,
 				914AFB6319D9637F00E433C1 /* ActioinDrawFrames.hpp */,
 				91D40FC019D83CBA002CEB53 /* EmittingObject.hpp */,
+				911F93AA19E0748E00E26A62 /* PostGlitch.hpp */,
 			);
 			name = Contents;
 			sourceTree = "<group>";

@@ -6,6 +6,7 @@
 #include "BaseSceneInterface.hpp"
 #include "MidiSenderController.hpp"
 #include "MidiReceiverController.hpp"
+#include "PostGlitch.hpp"
 #include "ofxExtras.h"
 #include "ofxOsc.h"
 
@@ -34,4 +35,7 @@ public:
     int mNumCurrentScene;
     
     int mMode;
+    
+    PostGlitch * mGlitch;
+    ofFbo mFbo;
 };

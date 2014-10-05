@@ -35,7 +35,7 @@ public:
         current.z = ofSignedNoise(0, 0, t);
         current *= 1200; // scale from -1,+1 range to -400,+400
         
-        cam.setPos(current);
+        cam.setCurrentPos(current);
         cam.update();
         
         lig.setPosition(mLigPos);
@@ -44,7 +44,6 @@ public:
     
     void draw()
     {
-        ofBackground(0, 0, 0);
         ofSetColor(255, 255, 255);
         ofPushStyle();
         ofNoFill();
@@ -62,9 +61,11 @@ public:
         ofDisableDepthTest();
         
         
-        drawRaderWindowMarks(6, (abs(sin(share::elapsedTimef))) * 20 + 5);
+//        drawRaderWindowMarks(6, (abs(sin(share::elapsedTimef))) * 20 + 5);
         ofPopStyle();
     }
+    
+    void setupCam(float w, float h){ cam.setup(w, h); }
     
     void drawGrid(float scale, float ticks, bool labels, bool x, bool y, bool z)
     {

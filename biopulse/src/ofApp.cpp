@@ -4,6 +4,7 @@
 #include "SceneC.hpp"
 
 
+
 #define FOR_SCENES for (vector<scenePtr>::iterator it = mScenes.begin(); it != mScenes.end(); it++)
 #define CURRENT_SCENE mScenes[mNumCurrentScene]
 
@@ -48,6 +49,17 @@ void ofApp::setup(){
     }
     CURRENT_SCENE->setEnableTimeline(true);
     
+    //-----------
+    // setup post glitch
+    //-----------
+    ofFbo::Settings s1;
+    s1.width  = plant::width;
+    s1.height = plant::height;
+    s1.useDepth = true;
+    s1.useStencil = true;
+    s1.internalformat = GL_RGBA;
+    mFbo.allocate(s1);
+    mGlitch = new PostGlitch(&mFbo);
     
     //-----------
     // init values
@@ -65,16 +77,25 @@ void ofApp::update(){
     
     CURRENT_SCENE->update();
     MIDI_SENDER->update();
+    mGlitch->update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0, 0, 0);
     ofSetWindowTitle("scene: " + ofToString(mNumCurrentScene));
+
+    
+    mFbo.begin();
+    ofBackground(0, 0, 0, 0);
     
     CURRENT_SCENE->draw();
     
     plant::drawPlantMask();
+    mFbo.end();
+    
+    mGlitch->generateFx();
+    
+    mFbo.draw(0, 0);
 
     ofSetColor(255);
     if (mMode == 3) {
@@ -100,7 +121,7 @@ void ofApp::keyPressed(int key){
         case '<': mNumCurrentScene = changeScene(-1); break;
         case '>': mNumCurrentScene = changeScene( 1); break;
         
-        case 'n': MIDI_SENDER->ctlOut(1, 127, 1); break;
+        case 'g': mGlitch->setFxAsTime(OFXPOSTGLITCH_CONVERGENCE, 0.5); break;
             
         default: CURRENT_SCENE->keyPressed(key); break;
     }
@@ -154,5 +175,25 @@ int ofApp::changeScene(int mv)
 void ofApp::receivedMidiMessage(ofxMidiMessage & e)
 {
 //    cout << e.toString() << endl;
+    if (e.status == MIDI_NOTE_ON) {
+        if (e.channel == 7) {
+            if (e.pitch == 45) {
+//                mGlitch->setFx(OFXPOSTGLITCH_SWELL, true);
+                mGlitch->setFxAsTime(OFXPOSTGLITCH_NOISE, 1);
+            }
+            if (e.pitch == 43) {
+//                mGlitch->setFx(OFXPOSTGLITCH_NOISE, true);
+            }
+        }
+    } else if (e.status == MIDI_NOTE_OFF) {
+        if (e.channel == 7) {
+//            if (e.pitch == 45) {
+//                mGlitch->setFx(OFXPOSTGLITCH_SWELL, false);
+//            }
+//            if (e.pitch == 43) {
+//                mGlitch->setFx(OFXPOSTGLITCH_NOISE, false);
+//            }
+        }
+    }
 }
 
