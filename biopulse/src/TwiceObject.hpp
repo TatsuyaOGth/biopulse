@@ -27,7 +27,7 @@ public:
         mFbo.begin();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         ofSetColor(255, 255, 255);
-        ofSetLineWidth(2);
+        ofSetLineWidth(4);
         ofLine(0, getHeight() * 0.5, getWidth(), getHeight() * 0.5);
         mFbo.end();
         

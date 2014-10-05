@@ -185,24 +185,27 @@ void ofApp::receivedMidiMessage(ofxMidiMessage & e)
             }
         }
         
+        if (e.channel == 6) mGlitch->setFx(OFXPOSTGLITCH_NOISE, true);
+        
         if (e.channel == 7) {
             if (e.pitch == 45) {
 //                mGlitch->setFx(OFXPOSTGLITCH_SWELL, true);
-//                mGlitch->setFxAsTime(OFXPOSTGLITCH_TWIST, 1);
+                mGlitch->setFx(OFXPOSTGLITCH_GLOW, true);
             }
-            if (e.pitch == 43) {
+//            if (e.pitch == 43) {
 //                mGlitch->setFx(OFXPOSTGLITCH_NOISE, true);
-            }
+//            }
         }
     } else if (e.status == MIDI_NOTE_OFF) {
         if (e.channel == 7) {
-//            if (e.pitch == 45) {
-//                mGlitch->setFx(OFXPOSTGLITCH_SWELL, false);
-//            }
+            if (e.pitch == 45) {
+                mGlitch->setFx(OFXPOSTGLITCH_GLOW, false);
+            }
 //            if (e.pitch == 43) {
 //                mGlitch->setFx(OFXPOSTGLITCH_NOISE, false);
 //            }
         }
+        if (e.channel == 6) mGlitch->setFx(OFXPOSTGLITCH_NOISE, false);
     }
 }
 

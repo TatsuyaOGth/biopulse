@@ -146,13 +146,13 @@ public:
         mBody.draw(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
         mPlant.draw(0, 0, plant::width, plant::width);
         
-        if (bNoise) {
-            ofPushMatrix();
-            float dx = (ofGetFrameNum() % 2 == 0) ? ofRandom(-4, -2) : ofRandom(2, 4);
-            ofTranslate(dx, 0);
-            share::mainFbo->getTextureReference().drawSubsection(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH,
-                                                                 plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
-        }
+//        if (bNoise) {
+//            ofPushMatrix();
+//            float dx = (ofGetFrameNum() % 2 == 0) ? ofRandom(-4, -2) : ofRandom(2, 4);
+//            ofTranslate(dx, 0);
+//            share::mainFbo->getTextureReference().drawSubsection(plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH,
+//                                                                 plant::bodyX, plant::bodyY, plant::bodyW, plant::bodyH);
+//        }
         ofPopMatrix();
         ofPopStyle();
         
@@ -214,11 +214,16 @@ public:
             if (e.channel == 5) {
                 if (e.pitch == 105) {
                     for (int i = 0; i < 12; i++) {
-                        mSL->createRippleCircles(280 + (i * 20), 0.05, 4);
+                        float g = i % 2 == 0 ? 15 : 0;
+                        mSL->createRippleCircles(280 + (i * 20 + g), 0.04, 6);
+                    }
+                    for (int i = 0; i < 200; i++) {
+                        mSL->createParticleDot(4.5);
                     }
                     mVL->moveScanLines();
                 } else {
                     mVL->stopScanLines();
+                    mSL->createHorizontalBarcord(4);
                 }
             }
             if (e.channel == 6) {
@@ -271,7 +276,7 @@ public:
                     mGD->stop();
                     mDT->stop();
                     mR->play();
-                    mRD->stop();
+                    mRD->play();
                     mPT->stop();
                     mGO->stop();
                     mBX->stop();
@@ -297,7 +302,8 @@ public:
                     mTW->stop();
                     mVL->mNumMaxDataIndex = 7;
                     data::bufferLength = 127;
-                    for (int i = 0; i < 2; i++) mVL->createScanLine();
+                    for (int i = 0; i < 4; i++) mVL->createScanLine();
+                    mVL->addSpeedScanLines(4);
                 }
                 if (e.pitch == 3) { // scene B-4
                     mVL->play();
@@ -314,10 +320,10 @@ public:
                     mTW->stop();
                     mVL->mNumMaxDataIndex = 11;
                     data::bufferLength = 64;
-                    for (int i = 0; i < 2; i++) {
+                    for (int i = 0; i < 4; i++) {
                         mVL->createScanLine();
-                        mVL->addSpeedScanLines(3);
                     }
+                    mVL->addSpeedScanLines(8);
                 }
                 if (e.pitch == 4) { // scene B-5
                     mVL->stop();

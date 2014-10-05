@@ -111,9 +111,7 @@ class ScanLines : public BaseContentsInterface
         }
         void draw()
         {
-//            if (getLife() < 0.2) if (ofRandomuf() > 0.5) return; // blink out
-            unsigned char a = 255;
-            if (getLife() < 0.5) a = ofMap(getLife(), 0, 0.5, 0, 255);
+            unsigned char a = ofxAnimationPrimitives::Easing::Quad::easeOut(getLife()) * 255;
             ofSetColor(p->mCol, a);
             ofNoFill();
             ofSetLineWidth(1);
@@ -139,9 +137,7 @@ class ScanLines : public BaseContentsInterface
         }
         void draw()
         {
-//            if (getLife() < 0.2) if (ofRandomuf() > 0.5) return; // blink out
-            unsigned char a = 255;
-            if (getLife() < 0.5) a = ofMap(getLife(), 0, 0.5, 0, 255);
+            unsigned char a = ofxAnimationPrimitives::Easing::Quad::easeOut(getLife()) * 255;
             ofSetColor(p->mCol, a);
             ofNoFill();
             ofSetLineWidth(1);
@@ -153,7 +149,73 @@ class ScanLines : public BaseContentsInterface
         }
     };
     //=======================================================================================================
-    
+    class HorizontalBarcord : public ofxAnimationPrimitives::Instance
+    {
+        ScanLines * p;
+    public:
+        HorizontalBarcord(ScanLines * P): p(P) {}
+
+        void draw()
+        {
+            unsigned char a = ofxAnimationPrimitives::Easing::Quad::easeOut(getLife()) * 255;
+            ofSetColor(p->mCol, a);
+            ofFill();
+            vector<vector<float> > & data = rs::scanedVoltages;
+            for (int i = 0; i < data.size(); i++) {
+                for (int j = 0; j < data[i].size(); j++) {
+                    float w = p->getWidth() / (float)data.size();;
+                    float h = 4;
+                    float x = i * (p->getWidth() / (float)data.size());
+                    float y = (j * h) + ((p->getHeight() * 0.5) - (data[i].size() * 0.5 * h));
+                    p->drawBarcode(ofToBinary(data[i][j]), x, y, w, h);
+                }
+            }
+        }
+    };
+    //=======================================================================================================
+    class ParticleDot : public ofxAnimationPrimitives::Instance
+    {
+        ScanLines * p;
+        ofVec2f mPos;
+        ofVec2f mVec;
+        float mReduction;
+    public:
+        ParticleDot(ScanLines * P): p(P)
+        {
+            mPos.set(p->getWidth() * 0.5, p->getHeight() * 0.5);
+            
+            float vx, vy;
+            if (ofRandomf() > 0) {
+                ofRandomf() > 0 ? vx = ofRandom(-20, -8) : vx = ofRandom(8, 20);
+                vy = ofRandom(-20, 20);
+            } else {
+                ofRandomf() > 0 ? vy = ofRandom(-20, -8) : vy = ofRandom(8, 20);
+                vx = ofRandom(-20, 20);
+            }
+            
+//            ofRandomf() > 0 ? vx = ofRandom(-20, -8) : vx = ofRandom(8, 20);
+//            ofRandomf() > 0 ? vy = ofRandom(-20, -8) : vy = ofRandom(8, 20);
+            mVec.set(vx, vy);
+            mReduction = 0.95;
+        }
+        void update()
+        {
+            mPos += mVec;
+            mVec *= mReduction;
+        }
+        void draw()
+        {
+            unsigned char a = 255;
+            if (getLife() < 0.3) if (ofRandomuf() > 0.5) return;
+            glPointSize(1);
+            ofVboMesh mesh;
+            mesh.addColor(ofColor(p->mCol, a));
+            mesh.addVertex(mPos);
+            mesh.setMode(OF_PRIMITIVE_POINTS);
+            mesh.draw();
+        }
+    };
+    //=======================================================================================================
     
     ofxAnimationPrimitives::InstanceManager mInstances;
 
@@ -180,6 +242,18 @@ public:
         ofSetColor(mCol);
         ofSetLineWidth(mLineWidth);
         mInstances.draw();
+    }
+    
+    void drawBarcode(string binalyString, float x, float y, float w, float h)
+    {
+        float size = w / (float)binalyString.size();
+        int i = 0;
+        for (string::iterator it = binalyString.begin(); it != binalyString.end(); it++) {
+//            (*it) == '1' ? ofFill() : ofNoFill();
+//            ofRect(x + (i * size), y, size, h);
+            if ((*it) == '1') ofRect(x + (i * size), y, size, h);
+            i++;
+        }
     }
     
     void createVerticalScanLine(float startH, float stopH, bool right, float duration)
@@ -210,6 +284,16 @@ public:
     void createRippleArc(float size, float speed, float duration)
     {
         mInstances.createInstance<RippleArc>(this, size, speed)->play(duration);
+    }
+    
+    void createHorizontalBarcord(float duration)
+    {
+        mInstances.createInstance<HorizontalBarcord>(this)->play(duration);
+    }
+    
+    void createParticleDot(float duration)
+    {
+        mInstances.createInstance<ParticleDot>(this)->play(duration);
     }
     
     void setColor(ofColor & col) { mCol.set(col); }

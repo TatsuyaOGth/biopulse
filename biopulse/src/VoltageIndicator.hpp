@@ -67,7 +67,6 @@ public:
     VoltageIndicator()
     {
         mMoveRulurX = 0;
-        mWaves.resize(DATASET.size(), vector<float>(data::bufferLength));
         updateWaves();
         
         mNumMaxDataIndex = 0;
@@ -112,10 +111,13 @@ public:
     void updateWaves()
     {
         int j = 0;
+        mWaves.clear();
         for (DATASET_IT it = DATASET.begin(); it != DATASET.end(); it++) {
+            vector<float> v;
             for (int i = 0; i < data::bufferLength; i++) {
-                mWaves[j][i] = ((*it)->getTargetData(i)->voltage);
+                v.push_back((*it)->getTargetData(i)->voltage);
             }
+            mWaves.push_back(v);
             j++;
         }
     }
@@ -181,14 +183,14 @@ public:
         
         // move ruler
         float moveWidthSize = getWidth() / data::bufferLength;
-        float oneWidthSize = getWidth() / 40;
+        float oneWidthSize = getWidth() / 20;
         int offsetFrameMax = (int)ceil(oneWidthSize / moveWidthSize);
         mMoveRulurX += moveWidthSize;
         if (mMoveRulurX > oneWidthSize) mMoveRulurX -= oneWidthSize;
         ofPushMatrix();
         ofSetColor(125);
         ofTranslate(-mMoveRulurX, 0);
-        for (int i = 0; i <= getWidth(); i += 20) {
+        for (int i = 0; i <= getWidth(); i += 40) {
             ofLine(i, 0 + topLane, i, getHeight() - bottomLane);
         }
         ofPopMatrix();
