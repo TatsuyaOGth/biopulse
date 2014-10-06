@@ -26,6 +26,7 @@ public:
     void windowResized(int w, int h);
     
     int changeScene(int mv);
+    void changeTargetSccene(int sceneid);
     void receivedMidiMessage(ofxMidiMessage & e);
     
     DataController * mDataController;

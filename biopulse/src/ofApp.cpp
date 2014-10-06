@@ -173,10 +173,19 @@ int ofApp::changeScene(int mv)
     return mNumCurrentScene;
 }
 
+void ofApp::changeTargetSccene(int sceneid)
+{
+    if (sceneid < 0) return;
+    if (sceneid >= mScenes.size()) return;
+    //    CURRENT_SCENE->exit();
+    CURRENT_SCENE->setEnableTimeline(false);
+    mNumCurrentScene += sceneid;
+    //    CURRENT_SCENE->setup();
+    CURRENT_SCENE->setEnableTimeline(true);
+}
+
 void ofApp::receivedMidiMessage(ofxMidiMessage & e)
 {
-    
-//    cout << e.toString() << endl;
     if (e.status == MIDI_NOTE_ON) {
         
         if (e.channel == 5) {
@@ -189,21 +198,19 @@ void ofApp::receivedMidiMessage(ofxMidiMessage & e)
         
         if (e.channel == 7) {
             if (e.pitch == 45) {
-//                mGlitch->setFx(OFXPOSTGLITCH_SWELL, true);
                 mGlitch->setFx(OFXPOSTGLITCH_GLOW, true);
             }
-//            if (e.pitch == 43) {
-//                mGlitch->setFx(OFXPOSTGLITCH_NOISE, true);
-//            }
+        }
+        if (e.channel == 16) {
+            if (e.pitch == 20) changeTargetSccene(0);
+            if (e.pitch == 21) changeTargetSccene(1);
+            if (e.pitch == 22) changeTargetSccene(2);
         }
     } else if (e.status == MIDI_NOTE_OFF) {
         if (e.channel == 7) {
             if (e.pitch == 45) {
                 mGlitch->setFx(OFXPOSTGLITCH_GLOW, false);
             }
-//            if (e.pitch == 43) {
-//                mGlitch->setFx(OFXPOSTGLITCH_NOISE, false);
-//            }
         }
         if (e.channel == 6) mGlitch->setFx(OFXPOSTGLITCH_NOISE, false);
     }
