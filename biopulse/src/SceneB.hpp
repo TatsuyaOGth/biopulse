@@ -177,10 +177,11 @@ public:
     
     void keyPressed( int key )
     {
-        if (key == 'q') mVL->createScanLine();
-        if (key == 'w') mVL->stopScanLines();
-        if (key == 'e') mVL->moveScanLines();
-        if (key == 'r') mVL->addSpeedScanLines(0.5);
+//        if (key == 'q') mVL->createScanLine();
+//        if (key == 'w') mVL->stopScanLines();
+//        if (key == 'e') mVL->moveScanLines();
+//        if (key == 'r') mVL->addSpeedScanLines(0.5);
+        if (key == 'q') mEM->togglePlay();
         
         mHead.sendMessageAll(key);
         mBody.sendMessageAll(key);
@@ -218,7 +219,7 @@ public:
                         mSL->createRippleCircles(280 + (i * 20 + g), 0.04, 6);
                     }
                     for (int i = 0; i < 200; i++) {
-                        mSL->createParticleDot(4.5);
+                        mSL->createParticleDot(ofRandom(4, 6));
                     }
                     mVL->moveScanLines();
                 } else {

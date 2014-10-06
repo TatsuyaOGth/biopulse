@@ -186,17 +186,17 @@ class ScanLines : public BaseContentsInterface
             
             float vx, vy;
             if (ofRandomf() > 0) {
-                ofRandomf() > 0 ? vx = ofRandom(-20, -8) : vx = ofRandom(8, 20);
+                ofRandomf() > 0 ? vx = ofRandom(-10, -5) : vx = ofRandom(5, 10);
                 vy = ofRandom(-20, 20);
             } else {
-                ofRandomf() > 0 ? vy = ofRandom(-20, -8) : vy = ofRandom(8, 20);
+                ofRandomf() > 0 ? vy = ofRandom(-10, -5) : vy = ofRandom(5, 10);
                 vx = ofRandom(-20, 20);
             }
             
 //            ofRandomf() > 0 ? vx = ofRandom(-20, -8) : vx = ofRandom(8, 20);
 //            ofRandomf() > 0 ? vy = ofRandom(-20, -8) : vy = ofRandom(8, 20);
             mVec.set(vx, vy);
-            mReduction = 0.95;
+            mReduction = 0.98;
         }
         void update()
         {
@@ -207,7 +207,7 @@ class ScanLines : public BaseContentsInterface
         {
             unsigned char a = 255;
             if (getLife() < 0.3) if (ofRandomuf() > 0.5) return;
-            glPointSize(1);
+            glPointSize(2);
             ofVboMesh mesh;
             mesh.addColor(ofColor(p->mCol, a));
             mesh.addVertex(mPos);

@@ -80,7 +80,7 @@ void main (void)
     vec2 texCoord = vec2(pos.x , pos.y);
     vec4 col = texture2DRect(image,texCoord);
     
-    col.rgb = col.rgb + snoise(vec2(pos.x*pos.y+rand*231.5 , pos.x+pos.y-rand*324.1))*0.5;
+    col.rgb = col.rgb + snoise(vec2(pos.x*pos.y+rand*231.5 , pos.x+pos.y-rand*324.1))*0.8;
     
     gl_FragColor.rgba = col.rgba;
 }

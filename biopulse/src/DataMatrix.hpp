@@ -53,12 +53,12 @@ public:
             list5.push_back(s5);
             list6.push_back(s6);
             
-            if (list1.size() > 36) list1.pop_front();
-            if (list2.size() > 36) list2.pop_front();
-            if (list3.size() > 36) list3.pop_front();
-            if (list4.size() > 36) list4.pop_front();
-            if (list5.size() > 36) list5.pop_front();
-            if (list6.size() > 36) list6.pop_front();
+            if (list1.size() > 37) list1.pop_front();
+            if (list2.size() > 37) list2.pop_front();
+            if (list3.size() > 37) list3.pop_front();
+            if (list4.size() > 37) list4.pop_front();
+            if (list5.size() > 37) list5.pop_front();
+            if (list6.size() > 37) list6.pop_front();
         }
         
         if (mode == 1) {

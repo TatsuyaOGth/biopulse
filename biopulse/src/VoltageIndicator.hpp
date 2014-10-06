@@ -168,15 +168,15 @@ public:
         
         
         // ruler
-        ofSetColor(60);
+        ofSetColor(120);
         for (int i = 0; i <= getWidth(); i += 40) {
             ofLine(i, 0 + topLane, i, getHeight() - bottomLane);
         }
-        ofSetColor(30);
+        ofSetColor(80);
         for (int i = 0 + 20; i <= getWidth(); i += 40) {
             ofLine(i, 0 + topLane, i, getHeight() - bottomLane);
         }
-        ofSetColor(30);
+        ofSetColor(60);
         for (int i = 0 + topLane; i <= getHeight() - bottomLane; i += 10) {
             ofLine(0, i, getWidth(), i);
         }
@@ -188,7 +188,7 @@ public:
         mMoveRulurX += moveWidthSize;
         if (mMoveRulurX > oneWidthSize) mMoveRulurX -= oneWidthSize;
         ofPushMatrix();
-        ofSetColor(125);
+        ofSetColor(120);
         ofTranslate(-mMoveRulurX, 0);
         for (int i = 0; i <= getWidth(); i += 40) {
             ofLine(i, 0 + topLane, i, getHeight() - bottomLane);
@@ -196,7 +196,7 @@ public:
         ofPopMatrix();
         
         // holizon line
-        ofSetColor(99);
+        ofSetColor(255);
         ofLine(0, getHeight() * 0.5, getWidth(), getHeight() * 0.5);
         ofLine(0, 0 + topLane, getWidth(), 0 + topLane);
         ofLine(0, getHeight() - bottomLane, getWidth(), getHeight() - bottomLane);
@@ -205,7 +205,7 @@ public:
         ofSetColor(0);
         ofRect(0, 0, getWidth(), topLane);
         ofRect(0, getHeight() - bottomLane, getWidth(), getHeight());
-        ofSetColor(199);
+        ofSetColor(255);
         int offset = ofGetFrameNum() % 40;
         for (int i = 0 + 20 + offset; i <= getWidth() + offset; i += 40) {
             ofEllipse(i, 0 + (topLane * 0.5), 12, 10);

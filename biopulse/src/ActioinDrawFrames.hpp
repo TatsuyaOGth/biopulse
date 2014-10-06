@@ -38,10 +38,8 @@ class ActionDrawFrames : public BaseContentsInterface
         }
         void draw()
         {
-            unsigned char a = 255;
-            if (getLife() < 0.5) {
-                a = (unsigned char)(ofMap(getLife(), 0, 0.5, 0, 255, true));
-            }
+            float e = ofxAnimationPrimitives::Easing::Quint::easeInOut(getLife()) * 300;
+            unsigned char a = ofClamp(e, 0, 255);
             ofSetColor(255, 255, 255, a);
             ofPushMatrix();
             ofTranslate(mPos);

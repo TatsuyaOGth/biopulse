@@ -325,6 +325,7 @@
 		911C516719D9E31C00D17666 /* ScanLines.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScanLines.hpp; sourceTree = "<group>"; };
 		911F93AA19E0748E00E26A62 /* PostGlitch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PostGlitch.hpp; sourceTree = "<group>"; };
 		9122D0B019D728CD00E7F84C /* DataMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataMatrix.hpp; sourceTree = "<group>"; };
+		9135EF5619E2EB07006BBF2F /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = bin/data/Shaders; sourceTree = "<group>"; };
 		91457C7D19E10C3E0008BB8B /* RotationBox.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RotationBox.hpp; sourceTree = "<group>"; };
 		91457C7F19E1159C0008BB8B /* TargetRadar.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TargetRadar.hpp; sourceTree = "<group>"; };
 		914AFB6319D9637F00E433C1 /* ActioinDrawFrames.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActioinDrawFrames.hpp; sourceTree = "<group>"; };
@@ -1657,6 +1658,7 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				9135EF5619E2EB07006BBF2F /* Shaders */,
 				914AFB9419D98AC600E433C1 /* myShaders */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,

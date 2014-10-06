@@ -24,7 +24,7 @@ void ofApp::setup(){
         ofLogError() << "faild load dataset";
         OF_EXIT_APP(1);
     }
-    data::bufferLength = 512;
+    data::bufferLength = 256;
     data::gain = 1;
     
     //----------
@@ -91,7 +91,7 @@ void ofApp::draw(){
     
     CURRENT_SCENE->draw();
     
-    plant::drawPlantMask();
+//    plant::drawPlantMask();
     mFbo.end();
     
     mGlitch->generateFx();
@@ -202,9 +202,9 @@ void ofApp::receivedMidiMessage(ofxMidiMessage & e)
             }
         }
         if (e.channel == 16) {
-            if (e.pitch == 20) changeTargetSccene(0);
-            if (e.pitch == 21) changeTargetSccene(1);
-            if (e.pitch == 22) changeTargetSccene(2);
+//            if (e.pitch == 20) changeTargetSccene(0);
+//            if (e.pitch == 21) changeTargetSccene(1);
+//            if (e.pitch == 22) changeTargetSccene(2);
         }
     } else if (e.status == MIDI_NOTE_OFF) {
         if (e.channel == 7) {
