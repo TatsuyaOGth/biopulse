@@ -117,12 +117,26 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    
+    if (key == '1') mGlitch->setFx(OFXPOSTGLITCH_CONVERGENCE	, true);
+    if (key == '2') mGlitch->setFx(OFXPOSTGLITCH_GLOW			, true);
+    if (key == '3') mGlitch->setFx(OFXPOSTGLITCH_SHAKER			, true);
+    if (key == '4') mGlitch->setFx(OFXPOSTGLITCH_CUTSLIDER		, true);
+    if (key == '5') mGlitch->setFx(OFXPOSTGLITCH_TWIST			, true);
+    if (key == '6') mGlitch->setFx(OFXPOSTGLITCH_OUTLINE		, true);
+    if (key == '7') mGlitch->setFx(OFXPOSTGLITCH_NOISE			, true);
+    if (key == '8') mGlitch->setFx(OFXPOSTGLITCH_SLITSCAN		, true);
+    if (key == '9') mGlitch->setFx(OFXPOSTGLITCH_SWELL			, true);
+    if (key == '0') mGlitch->setFx(OFXPOSTGLITCH_INVERT			, true);
+    
     switch (key) {
         case OF_KEY_TAB: mMode = (mMode + 1) % 4; break;
         case '<': mNumCurrentScene = changeScene(-1); break;
         case '>': mNumCurrentScene = changeScene( 1); break;
         
         case 'g': mGlitch->setFxAsTime(OFXPOSTGLITCH_CONVERGENCE, 0.5); break;
+        
+            
             
         default: CURRENT_SCENE->keyPressed(key); break;
     }
@@ -130,7 +144,20 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
+    
+    if (key == '1') mGlitch->setFx(OFXPOSTGLITCH_CONVERGENCE	, false);
+    if (key == '2') mGlitch->setFx(OFXPOSTGLITCH_GLOW			, false);
+    if (key == '3') mGlitch->setFx(OFXPOSTGLITCH_SHAKER			, false);
+    if (key == '4') mGlitch->setFx(OFXPOSTGLITCH_CUTSLIDER		, false);
+    if (key == '5') mGlitch->setFx(OFXPOSTGLITCH_TWIST			, false);
+    if (key == '6') mGlitch->setFx(OFXPOSTGLITCH_OUTLINE		, false);
+    if (key == '7') mGlitch->setFx(OFXPOSTGLITCH_NOISE			, false);
+    if (key == '8') mGlitch->setFx(OFXPOSTGLITCH_SLITSCAN		, false);
+    if (key == '9') mGlitch->setFx(OFXPOSTGLITCH_SWELL			, false);
+    if (key == '0') mGlitch->setFx(OFXPOSTGLITCH_INVERT			, false);
     switch (key) {
+            
+            
         default: CURRENT_SCENE->keyReleased(key); break;
     }
 }

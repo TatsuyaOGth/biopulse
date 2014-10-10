@@ -97,6 +97,8 @@ public:
             float vy = ofNoise(0, t);
             float x = (vx - 0.5) * 1000 + (getWidth()/2);
             float y = (vy - 0.5) * 1000 + (getHeight()/2);
+            x = getWidth()/2;
+            y = getHeight()/2;
             
             int i = (int)ofRandom(mFrameImgs.size());
             mFrames.createInstance<Frame>(x, y, mScale, ofRandom(360), &mFrameImgs[i], &bDraw)->play(14);
